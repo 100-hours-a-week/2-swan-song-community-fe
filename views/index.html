@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>아무 말 대잔치</title>
+        <link
+            rel="stylesheet"
+            as="style"
+            crossorigin
+            href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+        />
+        <link rel="stylesheet" href="../public/stylesheets/index.css" />
+        <link rel="stylesheet" href="../public/stylesheets/gnb.css" />
+        <script src="../public/javascripts/ProfileMenuToggle.js" defer></script>
+    </head>
+    <body>
+        <header class="gnb">
+            <h1>아무 말 대잔치</h1>
+            <a class="action-list">
+                <img
+                    class="profile-image action-list-toggle"
+                    src="../public/images/my-profile.png"
+                    alt="목록"
+                />
+                <ul class="profile-menu">
+                    <li><a href="./user-info-modify.html">회원정보수정</a></li>
+                    <li>
+                        <a href="/user-password-modify.html">비밀번호수정</a>
+                    </li>
+                    <li><a href="/logout">로그아웃</a></li>
+                </ul>
+            </a>
+        </header>
+        <section class="board">
+            <div class="board-header">
+                <div>안녕하세요,</div>
+                <div>
+                    아무 말 대잔치
+                    <span class="text-bold">게시판</span>입니다.
+                </div>
+            </div>
+            <div class="board-action">
+                <!--TODO: 게시글 등록 레이아웃 작성 시 추가 onclick="location.href='/post-upload.html'"-->
+                <button class="btn-submit">게시글 작성</button>
+            </div>
+            <div class="board-list">
+                <div class="board-item">
+                    <div class="post-summary">
+                        <div class="upper-info">
+                            <div class="post-title">제목</div>
+                        </div>
+                        <div class="down-info">
+                            <div class="post-reactions">
+                                <span class="post-reaction"
+                                    >좋아요 <span>0</span></span
+                                >
+                                <span class="post-reaction"
+                                    >댓글 <span>0</span></span
+                                >
+                                <span class="post-reaction"
+                                    >조회수 <span>0</span></span
+                                >
+                            </div>
+                            <div class="post-date">2021-08-01 00:00:00</div>
+                        </div>
+                    </div>
+                    <div class="author-info">
+                        <img
+                            class="profile-image"
+                            src="../public/images/my-profile.png"
+                            alt="프로필 이미지"
+                        />
+                        <div class="author-name">작성자</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

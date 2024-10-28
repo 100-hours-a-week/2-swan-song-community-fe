@@ -1,0 +1,80 @@
+.gnb {
+    position: relative;
+    width: 100%;
+    height: 104px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #000000;
+}
+
+.gnb .back {
+    position: absolute;
+    left: 20px;
+    top: 40%;
+    width: 10.93px;
+    height: 18.89px;
+}
+
+.gnb .back img {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.gnb h1 {
+    font-size: 32px;
+    font-family: 'Nanum Gothic', sans-serif;
+}
+
+.gnb .action-list {
+    position: absolute;
+    right: 50px;
+    width: 10.93px;
+    height: 10.93px;
+    display: flex;
+    align-items: center;
+}
+
+.profile-image {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: #000000 0.5px solid;
+}
+
+.action-list {
+    position: relative;
+}
+
+.profile-menu {
+    display: none;
+    position: absolute;
+    top: 80px;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    list-style: none;
+    margin: 0;
+    padding: 10px 0;
+    width: 150px;
+    text-align: center;
+    z-index: 1000;
+}
+
+.profile-menu li {
+    padding: 10px 20px;
+}
+
+.profile-menu li a {
+    text-decoration: none;
+    color: black;
+    display: block;
+}
+
+.profile-menu li:hover {
+    background-color: #f0f0f0;
+}
