@@ -16,6 +16,10 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/views', 'index.html'));
 });
 
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/views', 'login.html'));
+});
+
 app.listen(port, () => {
     console.log(`서버가 ${port}번 포트에서 실행 중입니다.`);
 });
