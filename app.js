@@ -24,6 +24,10 @@ app.get('/register', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/views', 'register.html'));
 });
 
+app.get('/post-modify', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/views', 'post-modify.html'));
+});
+
 app.listen(port, () => {
     console.log(`서버가 ${port}번 포트에서 실행 중입니다.`);
 });
