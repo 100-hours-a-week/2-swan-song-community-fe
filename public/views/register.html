@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>아무 말 대잔치</title>
+        <link rel="stylesheet" type="text/css" href='https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css'>
+        <link rel="stylesheet" href="../stylesheets/register.css" />
+        <link rel="stylesheet" href="../stylesheets/gnb.css" />
+    </head>
+    <body>
+        <header class="gnb">
+            <a href="/login"
+                ><img class="back" src="../images/shevlon-left.svg" alt="back"
+            /></a>
+            <h1>아무 말 대잔치</h1>
+        </header>
+        <section class="register">
+            <div class="register-logo-str">회원가입</div>
+            <form class="register-form" action="/register" method="post">
+                <div class="input-box-image">
+                    <label for="profile-image">프로필 사진</label>
+                    <dic class="image-placeholder-wrapper">
+                        <input
+                            type="file"
+                            id="profile-image"
+                            name="profile-image"
+                            accept="image/*"
+                        />
+                        <div
+                            class="image-placeholder"
+                            onclick="document.getElementById('profile-image').click()"
+                        >
+                            <img
+                                class="placeholder-plus"
+                                src="../images/Add_round_light.svg"
+                                alt="plus"
+                            />
+                        </div>
+                    </dic>
+                </div>
+                <div class="input-box">
+                    <label for="email">이메일</label>
+                    <input
+                        type="text"
+                        name="email"
+                        placeholder="이메일을 입력하세요"
+                    />
+                </div>
+                <div class="input-box">
+                    <label for="password">비밀번호</label>
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="비밀번호를 입력하세요"
+                    />
+                </div>
+                <div class="input-box">
+                    <label for="password-checker">비밀번호 확인</label>
+                    <input
+                        type="password"
+                        name="password-checker"
+                        placeholder="비밀번호를 한 번 더 입력하세요"
+                    />
+                </div>
+                <div class="input-box">
+                    <label for="nickname">닉네임</label>
+                    <input
+                        type="text"
+                        name="nickname"
+                        placeholder="닉네임을 입력하세요"
+                    />
+                </div>
+                <div class="btn-box">
+                    <!-- 서버 로그인 기능 구현 전이라 로그인 시 메인 페이지로 이동합니다.-->
+                    <button
+                        class="register-btn btn-submit"
+                        type="button"
+                        onclick="location.href='/'"
+                    >
+                        회원가입
+                    </button>
+                    <a class="login-redirect-btn" href="/login"
+                        >로그인 하러가기</a
+                    >
+                </div>
+            </form>
+        </section>
+    </body>
+</html>
