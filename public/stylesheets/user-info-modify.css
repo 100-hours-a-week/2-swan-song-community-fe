@@ -1,0 +1,213 @@
+body {
+    background-color: #f4f5f7;
+    font-family: 'Pretendard Variable', Pretendard, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.user-info-modify {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.user-info-modify-logo-str {
+    font-family: 'Pretendard Variable', Pretendard, sans-serif;
+    font-size: 32px;
+    font-weight: bold;
+    line-height: 38.19px;
+    margin-bottom: 67px;
+}
+
+.user-info-modify-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #f4f5f7;
+    row-gap: 35px;
+}
+
+.input-box {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.input-box label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.input-box input {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+}
+
+.input-box input::placeholder {
+    color: #000000;
+}
+
+/* 이미지 전용 input box */
+.input-box-image {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+}
+
+.input-box-image label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type='file'] {
+    display: none;
+}
+
+.image-placeholder-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-image-overlay {
+    position: absolute;
+    width: 108px;
+    height: 108px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.profile-image-overlay-guide {
+    font-weight: bold;
+    color: #ffffff;
+    padding: 5px 10px;
+    border: 1.5px solid #ffffff;
+    border-radius: 30px;
+}
+
+.image-placeholder {
+    width: 100px;
+    height: 100px;
+    background-color: #ccc;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 2rem;
+    color: #555;
+}
+
+.placeholder-cur-profile {
+    width: 108px;
+    height: 108px;
+    border-radius: 50%;
+    border: #000000 0.5px solid;
+}
+
+.placeholder-plus {
+    width: 24px;
+    height: 24px;
+}
+
+.input-box-image label {
+    font-size: 1rem;
+    color: #333;
+}
+
+.btn-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    font-size: 14px;
+    row-gap: 10px;
+}
+
+.btn-submit {
+    border: none;
+    border-radius: 5px;
+    background-color: #aca0eb; /*활성화 시 #7F6AEE*/
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.user-info-modify-btn {
+    width: 100%;
+    padding: 10px;
+}
+
+.login-redirect-btn {
+    text-decoration: none;
+    color: #000000;
+    font-weight: regular;
+}
+
+.modal-delete {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 40%;
+    padding: 20px 40px;
+    border-radius: 15px;
+    background-color: #ffffff;
+    border: 0.5px solid #00000030;
+}
+
+.modal-delete-user {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-delete-user h2 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.modal-delete-user p {
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.modal-delete-user button {
+    padding: 6px 25px;
+    border: none;
+    border-radius: 5px;
+    background-color: #aca0eb;
+    color: #ffffff;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.modal-delete-user .cancel {
+    background-color: #000000;
+    color: #e0e0e0;
+}
+
+.modal-delete-user .confirm {
+    background-color: #7f6aee;
+    color: #000;
+}
