@@ -32,6 +32,10 @@ app.get('/post-upload', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/views', 'post-upload.html'));
 });
 
+app.get('/post-detail/:id', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/views', 'post-detail.html'));
+});
+
 app.listen(port, () => {
     console.log(`서버가 ${port}번 포트에서 실행 중입니다.`);
 });
