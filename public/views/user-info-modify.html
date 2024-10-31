@@ -7,7 +7,10 @@
         <link rel="stylesheet" href="../stylesheets/user-info-modify.css" />
         <link rel="stylesheet" href="../stylesheets/gnb.css" />
         <script src="../javascripts/GlobalNavbarFunction.js" defer></script>
-        <script src="../javascripts/UserInfoModifyModalFunction.js" defer></script>
+        <script
+            src="../javascripts/UserInfoModifyModalFunction.js"
+            defer
+        ></script>
     </head>
     <body>
         <header class="gnb">
@@ -22,9 +25,15 @@
                     alt="목록"
                 />
                 <ul class="profile-menu">
-                    <li><a href="../views/user-info-modify.html">회원정보수정</a></li>
                     <li>
-                        <a href="../views/user-password-modify.html">비밀번호수정</a>
+                        <a href="../views/user-info-modify.html"
+                            >회원정보수정</a
+                        >
+                    </li>
+                    <li>
+                        <a href="../views/user-password-modify.html"
+                            >비밀번호수정</a
+                        >
                     </li>
                     <li><a href="/logout">로그아웃</a></li>
                 </ul>
@@ -80,7 +89,9 @@
                     >
                         수정하기
                     </button>
-                    <a id="btn-user-delete" class="login-redirect-btn">회원 탈퇴</a>
+                    <a id="btn-user-delete" class="login-redirect-btn"
+                        >회원 탈퇴</a
+                    >
                 </div>
             </form>
         </section>
@@ -89,7 +100,9 @@
                 <h4>회원탈퇴 하시겠습니까?</h4>
                 <p>작성된 게시글과 댓글은 삭제됩니다.</p>
                 <div>
-                    <button id="btn-cancel-user-delete" class="cancel">취소</button>
+                    <button id="btn-cancel-user-delete" class="cancel">
+                        취소
+                    </button>
                     <button class="confirm">확인</button>
                 </div>
             </div>
