@@ -10,6 +10,5 @@ const profileMenuToggle = () => {
     }
 };
 
-const actionListToggle =
-    document.getElementsByClassName('action-list-toggle')[0];
+const actionListToggle = document.getElementById('profileDropDownToggle');
 actionListToggle.addEventListener('click', profileMenuToggle);
