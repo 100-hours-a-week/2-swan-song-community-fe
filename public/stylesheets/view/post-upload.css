@@ -26,9 +26,11 @@ body {
     justify-content: center;
     align-items: center;
     margin-top: 50px;
+    width: 60%;
+    max-width: 592px;
 }
 
-.post-upload-str {
+.post-upload-header a {
     font-size: 24px;
     font-weight: bold;
     line-height: 31.2px;
@@ -75,19 +77,30 @@ body {
     color: #000000;
 }
 
+.helper-text {
+    align-self: flex-start;
+    margin-top: 5px;
+    padding: 0px 25px;
+    display: none;
+    color: red;
+    font-size: 12px;
+    line-height: 14.52px;
+}
+
 .input-box textarea {
     width: 100%;
-    height: calc(100vh - 200px); /* 페이지 높이에 맞춰 조정 가능 */
-    box-sizing: border-box;
+    height: auto;
     padding: 15px;
     border-radius: 8px;
     border: none;
-    resize: none;
     overflow-y: auto; /* 세로 스크롤만 활성화 */
     font-family: inherit;
     font-size: 16px;
     line-height: 1.5;
     background-color: #ffffff00;
+    min-height: 300px; /* 최소 높이를 설정 (원하는 값으로 조정 가능) */
+    box-sizing: border-box; /* 패딩과 보더를 포함하여 너비 계산 */
+    resize: none;
 }
 
 .input-box textarea::-webkit-scrollbar {
@@ -107,7 +120,7 @@ body {
     margin-top: 20px;
 }
 
-.btn-submit {
+.submit-btn {
     border: none;
     border-radius: 5px;
     background-color: #aca0eb; /*활성화 시 #7F6AEE*/
