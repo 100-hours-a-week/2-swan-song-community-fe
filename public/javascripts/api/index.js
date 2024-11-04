@@ -1,21 +1,20 @@
-// board -> post 수정 (오해소지있음))
-const boardList = document.querySelector('.board-list');
+const postList = document.querySelector('.post-list');
 
-const getPosts = async () => {
+const fetchPosts = async () => {
     const res = await fetch('./data/posts.json');
     const boards = await res.json();
     return boards;
 };
 
-const renderBoards = async () => {
-    const boards = await getPosts();
-    boardList.innerHTML = '';
+const renderPostList = async () => {
+    const posts = await fetchPosts();
+    postList.innerHTML = '';
 
-    boards.forEach(board => {
-        const boardItem = document.createElement('div');
-        boardItem.className = 'board-item';
-        boardItem.onclick = () => {
-            location.href = `./views/post-detail/${board.id}`;
+    posts.forEach(post => {
+        const postItem = document.createElement('div');
+        postItem.className = 'post-item';
+        postItem.onclick = () => {
+            location.href = `./views/post-detail.html?postId=${post.id}`;
         };
 
         const postSummary = document.createElement('div');
@@ -26,7 +25,7 @@ const renderBoards = async () => {
 
         const postTitle = document.createElement('div');
         postTitle.className = 'post-title';
-        postTitle.textContent = board.title;
+        postTitle.textContent = post.title;
 
         upperInfo.appendChild(postTitle);
         postSummary.appendChild(upperInfo);
@@ -37,49 +36,52 @@ const renderBoards = async () => {
         const postReactions = document.createElement('div');
         postReactions.className = 'post-reactions';
 
-        const likes = document.createElement('span');
-        likes.className = 'post-reaction';
-        likes.innerHTML = `좋아요 <span>${board.likesCount}</span>`;
-        postReactions.appendChild(likes);
+        const likeCount = document.createElement('span');
+        likeCount.className = 'post-reaction';
+        likeCount.innerHTML = `좋아요 <span>${post.likesCount}</span>`;
+        postReactions.appendChild(likeCount);
 
-        const comments = document.createElement('span');
-        comments.className = 'post-reaction';
-        comments.innerHTML = `댓글 <span>${board.commentsCount}</span>`;
-        postReactions.appendChild(comments);
+        const commentCount = document.createElement('span');
+        commentCount.className = 'post-reaction';
+        commentCount.innerHTML = `댓글 <span>${post.commentsCount}</span>`;
+        postReactions.appendChild(commentCount);
 
-        const views = document.createElement('span');
-        views.className = 'post-reaction';
-        views.innerHTML = `조회수 <span>${board.viewsCount}</span>`;
-        postReactions.appendChild(views);
+        const viewCount = document.createElement('span');
+        viewCount.className = 'post-reaction';
+        viewCount.innerHTML = `조회수 <span>${post.viewsCount}</span>`;
+        postReactions.appendChild(viewCount);
 
         downInfo.appendChild(postReactions);
 
-        const postDate = document.createElement('div');
-        postDate.className = 'post-date';
-        postDate.textContent = new Date(board.createdAt).toLocaleString();
-        downInfo.appendChild(postDate);
+        const postCreatedDateTime = document.createElement('div');
+        postCreatedDateTime.className = 'post-date';
+        postCreatedDateTime.textContent = new Date(
+            post.createdAt,
+        ).toLocaleString();
+
+        downInfo.appendChild(postCreatedDateTime);
 
         postSummary.appendChild(downInfo);
-        boardItem.appendChild(postSummary);
+        postItem.appendChild(postSummary);
 
         const authorInfo = document.createElement('div');
         authorInfo.className = 'author-info';
 
         const profileImage = document.createElement('img');
         profileImage.className = 'profile-image';
-        profileImage.src = board.profileImage;
+        profileImage.src = post.profileImage;
         profileImage.alt = '프로필 이미지';
 
         const authorName = document.createElement('div');
         authorName.className = 'author-name';
-        authorName.textContent = board.authorName;
+        authorName.textContent = post.authorName;
 
         authorInfo.appendChild(profileImage);
         authorInfo.appendChild(authorName);
-        boardItem.appendChild(authorInfo);
+        postItem.appendChild(authorInfo);
 
-        boardList.appendChild(boardItem);
+        postList.appendChild(postItem);
     });
 };
 
-renderBoards();
+renderPostList();
