@@ -79,17 +79,31 @@ body {
 
 .login-btn {
     width: 100%;
-    padding: 10px;
+    height: 40px;
     border: none;
     border-radius: 5px;
-    background-color: #aca0eb; /*활성화 시 #7F6AEE*/
-    color: #ffffff;
+    background-color: #ACA0EB;
+    color: white;
     font-size: 14px;
     font-weight: bold;
+    cursor: not-allowed;
+    opacity: 0.5;
 }
 
 .register-btn {
     text-decoration: none;
     color: #000000;
     font-weight: regular;
+}
+
+.help-text {
+    align-self: flex-start;
+    display: none;
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.help-text.visible {
+    display: block;
 }

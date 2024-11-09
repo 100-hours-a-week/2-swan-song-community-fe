@@ -63,10 +63,11 @@ body {
 .btn-submit {
     border: none;
     border-radius: 5px;
-    background-color: #aca0eb; /*활성화 시 #7F6AEE*/
+    background-color: #aca0eb;
     color: #ffffff;
     font-size: 14px;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .btn-submit:hover {
@@ -99,6 +100,7 @@ body {
     height: 31px;
     font-size: 24px;
     font-weight: bold;
+    max-width: 100%;
 }
 
 .post-summary .down-info {
@@ -137,4 +139,10 @@ body {
     border-radius: 50%;
     border: #000000 0.5px solid;
     margin-right: 10px;
+}
+
+.text-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

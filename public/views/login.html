@@ -11,9 +11,10 @@
         />
         <link rel="stylesheet" href="../stylesheets/module/global-navbar.css" />
         <link rel="stylesheet" href="../stylesheets/view/login.css" />
+        <script src="../javascripts/validator/login.js" defer></script>
     </head>
     <body>
-        <header class="gnb">
+        <header class="global-navbar">
             <h1>아무 말 대잔치</h1>
         </header>
         <section class="login">
@@ -25,6 +26,7 @@
                         type="text"
                         name="email"
                         placeholder="이메일을 입력하세요"
+                        required
                     />
                 </div>
                 <div class="input-box">
@@ -33,10 +35,11 @@
                         type="password"
                         name="password"
                         placeholder="비밀번호를 입력하세요"
+                        required
                     />
+                    <span class="help-text">* 아이디나 비밀번호가 형식에 맞지 않습니다.</span>
                 </div>
                 <div class="btn-box">
-                    <!-- 서버 로그인 기능 구현 전이라 로그인 시 메인 페이지로 이동합니다.-->
                     <button
                         class="login-btn"
                         type="button"
@@ -44,7 +47,6 @@
                     >
                         로그인
                     </button>
-                    <!-- register 뷰 제작 전 -->
                     <a class="register-btn" href="/register">회원가입</a>
                 </div>
             </form>

@@ -43,7 +43,7 @@ body {
     padding: 20px;
     border-radius: 5px;
     background-color: #f4f5f7;
-    row-gap: 35px;
+    row-gap: 10px;
 }
 
 .input-box {
@@ -58,7 +58,7 @@ body {
 }
 
 .input-box input {
-    margin-bottom: 15px;
+    margin-bottom: 5px;
     padding: 10px;
     border: 1px solid #000000;
     border-radius: 5px;
@@ -142,4 +142,13 @@ input[type='file'] {
     text-decoration: none;
     color: #000000;
     font-weight: regular;
+}
+
+.helper-text {
+    align-self: flex-start;
+    display: none;
+    color: red;
+    font-size: 12px;
+    line-height: 14.52px;
+    margin-top: 5px;
 }
