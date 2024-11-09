@@ -47,25 +47,32 @@ document.addEventListener('DOMContentLoaded', function () {
     setCommentButtonUpload();
 });
 
-const setCommentButtonUpload = () =>  {
-    const commentInputFormButton = document.getElementById('commentInputFormButton');
-    const commentInputFormTextarea = document.getElementById('commentInputFormTextarea');
+const setCommentButtonUpload = () => {
+    const commentInputFormButton = document.getElementById(
+        'commentInputFormButton',
+    );
+    const commentInputFormTextarea = document.getElementById(
+        'commentInputFormTextarea',
+    );
 
     commentInputFormTextarea.value = '';
     commentInputFormButton.innerText = '댓글 등록';
 
     const handleUploadComment = () => {
-        commentInputFormButton.removeEventListener('click', handleUploadComment);
+        commentInputFormButton.removeEventListener(
+            'click',
+            handleUploadComment,
+        );
         if (commentInputFormTextarea.value.trim() === '') {
             alert('댓글을 입력해주세요.');
             return;
         }
 
         uploadComment();
-    }
-    
+    };
+
     commentInputFormButton.addEventListener('click', handleUploadComment);
-}
+};
 
 const uploadComment = () => {
     fetch(window.location.pathname + '/comment', {
@@ -77,27 +84,34 @@ const uploadComment = () => {
             commentContent: commentInputFormTextarea.value,
         }),
     })
-    .then((res) => {
-        if (res.status === 201) {
-            window.location.reload();
-        } else {
-            alert('댓글 작성에 실패했습니다.');
-        }
-    })
-    .catch((err) => {
-        console.error('댓글 작성 중 에러 발생:', err);
-    });
-}
+        .then(res => {
+            if (res.status === 201) {
+                window.location.reload();
+            } else {
+                alert('댓글 작성에 실패했습니다.');
+            }
+        })
+        .catch(err => {
+            console.error('댓글 작성 중 에러 발생:', err);
+        });
+};
 
 const setCommentButtonUpdate = (commentId, currentText) => {
-    const commentInputFormTextarea = document.getElementById('commentInputFormTextarea');
+    const commentInputFormTextarea = document.getElementById(
+        'commentInputFormTextarea',
+    );
     commentInputFormTextarea.value = currentText;
 
-    const commentInputFormButton = document.getElementById('commentInputFormButton');
+    const commentInputFormButton = document.getElementById(
+        'commentInputFormButton',
+    );
     commentInputFormButton.innerText = '댓글 수정';
 
     const handleUpdateComment = () => {
-        commentInputFormButton.removeEventListener('click', handleUpdateComment);
+        commentInputFormButton.removeEventListener(
+            'click',
+            handleUpdateComment,
+        );
         if (commentInputFormTextarea.value.trim() === '') {
             alert('댓글을 입력해주세요.');
             return;
@@ -105,13 +119,12 @@ const setCommentButtonUpdate = (commentId, currentText) => {
 
         updateComment(commentId);
         setCommentButtonUpload();
-        
-    }
+    };
 
-    commentInputFormButton.addEventListener('click',  handleUpdateComment);
-}
+    commentInputFormButton.addEventListener('click', handleUpdateComment);
+};
 
-const updateComment = (commentId) => {
+const updateComment = commentId => {
     fetch(window.location.pathname + '/comment/' + commentId, {
         method: 'PUT',
         headers: {
@@ -121,14 +134,14 @@ const updateComment = (commentId) => {
             commentContent: commentInputFormTextarea.value,
         }),
     })
-    .then((res) => {
-        if (res.status === 200) {
-            window.location.reload();
-        } else {
-            alert('댓글 수정에 실패했습니다.');
-        }
-    })
-    .catch((err) => {
-        console.error('댓글 수정 중 에러 발생:', err);
-    });
-}
+        .then(res => {
+            if (res.status === 200) {
+                window.location.reload();
+            } else {
+                alert('댓글 수정에 실패했습니다.');
+            }
+        })
+        .catch(err => {
+            console.error('댓글 수정 중 에러 발생:', err);
+        });
+};

@@ -14,7 +14,7 @@ function validateNickname() {
 
 // 폼 제출 시 validateNickname 호출
 const userInfoModifyForm = document.querySelector('.user-info-modify-form');
-userInfoModifyForm.addEventListener('submit', (event) => {
+userInfoModifyForm.addEventListener('submit', event => {
     if (!validateNickname()) {
         event.preventDefault(); // 유효성 검사 실패 시 폼 제출 방지
     }

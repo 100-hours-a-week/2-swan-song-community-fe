@@ -1,13 +1,17 @@
 document.addEventListener('DOMContentLoaded', function () {
     const emailInput = document.querySelector('input[name="email"]');
     const passwordInput = document.querySelector('input[name="password"]');
-    const passwordCheckerInput = document.querySelector('input[name="password-checker"]');
+    const passwordCheckerInput = document.querySelector(
+        'input[name="password-checker"]',
+    );
     const nicknameInput = document.querySelector('input[name="nickname"]');
     const submitButton = document.querySelector('.register-btn');
-    
+
     const emailHelper = document.querySelector('.email-helper');
     const passwordHelper = document.querySelector('.password-helper');
-    const passwordCheckerHelper = document.querySelector('.password-checker-helper');
+    const passwordCheckerHelper = document.querySelector(
+        '.password-checker-helper',
+    );
     const nicknameHelper = document.querySelector('.nickname-helper');
 
     function validateEmail() {
@@ -24,8 +28,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const hasUpperCase = /[A-Z]/.test(password);
         const hasLowerCase = /[a-z]/.test(password);
         const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-        
-        const isValid = isValidLength && hasNumber && hasUpperCase && hasLowerCase && hasSpecialChar;
+
+        const isValid =
+            isValidLength &&
+            hasNumber &&
+            hasUpperCase &&
+            hasLowerCase &&
+            hasSpecialChar;
         passwordHelper.style.display = isValid ? 'none' : 'block';
         return isValid;
     }
@@ -48,7 +57,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const isPasswordMatch = validatePasswordChecker();
         const isNicknameValid = validateNickname();
 
-        if (isEmailValid && isPasswordValid && isPasswordMatch && isNicknameValid) {
+        if (
+            isEmailValid &&
+            isPasswordValid &&
+            isPasswordMatch &&
+            isNicknameValid
+        ) {
             submitButton.style.backgroundColor = '#7F6AEE';
             submitButton.disabled = false;
         } else {
@@ -63,4 +77,4 @@ document.addEventListener('DOMContentLoaded', function () {
     nicknameInput.addEventListener('input', updateButtonState);
 
     updateButtonState(); // 초기 상태 업데이트
-}); 
+});

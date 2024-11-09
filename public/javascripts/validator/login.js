@@ -29,7 +29,7 @@ function validateForm() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const loginButton = document.querySelector('.login-btn');
     loginButton.disabled = true;
 
@@ -38,9 +38,11 @@ document.addEventListener('DOMContentLoaded', function() {
         input.addEventListener('input', validateForm);
     });
 
-    document.querySelector('.login-form').addEventListener('submit', function(event) {
-        if (!validateForm()) {
-            event.preventDefault();
-        }
-    });
-}); 
+    document
+        .querySelector('.login-form')
+        .addEventListener('submit', function (event) {
+            if (!validateForm()) {
+                event.preventDefault();
+            }
+        });
+});
