@@ -12,6 +12,8 @@
         <link rel="stylesheet" href="../stylesheets/module/global-navbar.css" />
         <link rel="stylesheet" href="../stylesheets/view/register.css" />
         <script src="../javascripts/validator/register.js" defer></script>
+        <script src="../javascripts/api/authApi.js" defer></script>
+        <script src="../javascripts/view/register.js" defer></script>
     </head>
     <body>
         <header class="global-navbar">
@@ -27,24 +29,34 @@
         </header>
         <section class="register">
             <div class="register-logo-str">회원가입</div>
-            <form class="register-form" action="/register" method="post">
+            <form
+                class="register-form"
+                id="registerForm"
+                enctype="multipart/form-data"
+            >
                 <div class="input-box-image">
-                    <label for="profile-image">프로필 사진</label>
+                    <label for="profileImage">프로필 사진</label>
                     <div class="image-placeholder-wrapper">
                         <input
                             type="file"
-                            id="profile-image"
-                            name="profile-image"
+                            id="profileImage"
+                            name="profileImage"
                             accept="image/*"
                         />
                         <div
                             class="image-placeholder"
-                            onclick="document.getElementById('profile-image').click()"
+                            onclick="document.getElementById('profileImage').click()"
                         >
                             <img
                                 class="placeholder-plus"
                                 src="../images/Add_round_light.svg"
                                 alt="plus"
+                            />
+                            <img
+                                id="imagePreview"
+                                class="image-preview"
+                                alt="Image Preview"
+                                style="display: none"
                             />
                         </div>
                     </div>
@@ -55,6 +67,7 @@
                         type="text"
                         name="email"
                         placeholder="이메일을 입력하세요"
+                        required
                     />
                     <span class="helper-text email-helper"
                         >* 유효한 이메일을 입력하세요.</span
@@ -66,6 +79,7 @@
                         type="password"
                         name="password"
                         placeholder="비밀번호를 입력하세요"
+                        required
                     />
                     <span class="helper-text password-helper"
                         >* 비밀번호는 8자 이상 20자 이하이며, 특수문자, 영어,
@@ -73,13 +87,16 @@
                     >
                 </div>
                 <div class="input-box">
-                    <label for="password-checker">비밀번호 확인 *</label>
+                    <label for="passwordChecker">비밀번호 확인 *</label>
                     <input
                         type="password"
-                        name="password-checker"
+                        name="passwordChecker"
                         placeholder="비밀번호를 한 번 더 입력하세요"
+                        required
                     />
-                    <span class="helper-text password-checker-helper"
+                    <span
+                        id="passwordCheckerHelper"
+                        class="helper-text password-checker-helper"
                         >* 비밀번호가 일치하지 않습니다.</span
                     >
                 </div>
@@ -89,17 +106,14 @@
                         type="text"
                         name="nickname"
                         placeholder="닉네임을 입력하세요"
+                        required
                     />
-                    <span class="helper-text nickname-helper"
+                    <span class="helper-text nickname-helper d-block"
                         >* 닉네임을 입력하세요.</span
                     >
                 </div>
                 <div class="btn-box">
-                    <button
-                        class="register-btn btn-submit"
-                        type="button"
-                        onclick="location.href='/'"
-                    >
+                    <button class="register-btn btn-submit" type="submit">
                         회원가입
                     </button>
                     <a class="login-redirect-btn" href="/login"

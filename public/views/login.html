@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="../stylesheets/module/global-navbar.css" />
         <link rel="stylesheet" href="../stylesheets/view/login.css" />
         <script src="../javascripts/validator/login.js" defer></script>
+        <script src="../javascripts/api/authApi.js" defer></script>
     </head>
     <body>
         <header class="global-navbar">
@@ -19,7 +20,7 @@
         </header>
         <section class="login">
             <div class="login-logo-str">로그인</div>
-            <form class="login-form" action="/login" method="post">
+            <form id="loginForm" class="login-form">
                 <div class="input-box">
                     <label for="email">이메일</label>
                     <input
@@ -42,15 +43,10 @@
                     >
                 </div>
                 <div class="btn-box">
-                    <button
-                        class="login-btn"
-                        type="button"
-                        onclick="location.href='/'"
-                    >
-                        로그인
-                    </button>
+                    <button class="login-btn" type="submit">로그인</button>
                     <a class="register-btn" href="/register">회원가입</a>
                 </div>
+                <div class="login-error-helper" style="color: red"></div>
             </form>
         </section>
     </body>

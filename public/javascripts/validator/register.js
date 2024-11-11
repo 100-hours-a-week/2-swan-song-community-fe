@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const emailInput = document.querySelector('input[name="email"]');
     const passwordInput = document.querySelector('input[name="password"]');
     const passwordCheckerInput = document.querySelector(
-        'input[name="password-checker"]',
+        'input[name="passwordChecker"]',
     );
     const nicknameInput = document.querySelector('input[name="nickname"]');
     const submitButton = document.querySelector('.register-btn');
@@ -45,9 +45,46 @@ document.addEventListener('DOMContentLoaded', function () {
         return isValid;
     }
 
-    function validateNickname() {
-        const isValid = nicknameInput.value.trim() !== '';
-        nicknameHelper.style.display = isValid ? 'none' : 'block';
+    async function validateNickname() {
+        const nickname = nicknameInput.value.trim();
+
+        let isValid = true;
+        if (nickname === '') {
+            nicknameHelper.style.color = '#FF0000';
+            nicknameHelper.textContent = '* 닉네임을 입력하세요.';
+            isValid = false;
+        } else if (nickname.length > 10) {
+            nicknameHelper.style.color = '#FF0000';
+            nicknameHelper.textContent = '* 닉네임은 10자리 이하여야 합니다.';
+            isValid = false;
+        } else {
+            try {
+                const response = await fetch(
+                    `/api/v1/auth/check-nickname?nickname=${nickname}`,
+                    {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    },
+                );
+
+                const data = await response.json();
+                if (!data.data.isAvailable) {
+                    console.log(data);
+                    console.log(data.data.isAvailable);
+                    nicknameHelper.style.color = '#FF0000';
+                    nicknameHelper.textContent = '* 닉네임이 중복되었습니다.';
+                    isValid = false;
+                } else {
+                    nicknameHelper.style.color = '#007ACC';
+                    nicknameHelper.textContent = `* ${data.message}`;
+                }
+            } catch (error) {
+                isValid = false;
+            }
+        }
+
         return isValid;
     }
 
