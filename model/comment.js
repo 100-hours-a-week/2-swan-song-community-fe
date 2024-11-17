@@ -1,13 +1,11 @@
 let autoIncrementCommentId = 1;
 
-class Comment {
+export class Comment {
     constructor(content, userId, postId) {
-        this.id = autoIncrementCommentId++;
+        this.commentId = autoIncrementCommentId++;
         this.content = content;
         this.authorId = userId;
         this.postId = postId;
         this.createdDateTime = new Date();
     }
 }
-
-module.exports = Comment;

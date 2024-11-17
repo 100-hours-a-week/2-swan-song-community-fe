@@ -1,6 +1,6 @@
 let autoIncrementPostId = 1;
 
-class Post {
+export class Post {
     constructor(title, content, contentImageUrl, userId) {
         this.id = autoIncrementPostId++;
         this.title = title;
@@ -10,5 +10,3 @@ class Post {
         this.createdDateTime = new Date();
     }
 }
-
-module.exports = Post;

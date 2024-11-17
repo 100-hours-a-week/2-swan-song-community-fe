@@ -14,7 +14,6 @@ viewRouter.use(cookieParser());
 
 // 인가 미들웨어 정의
 const checkAuthorization = (req, res, next) => {
-    console.log('?!?! ', req.path);
     const sessionId = req.cookies.session_id;
     // 로그인 및 등록 페이지는 허용
     if (req.path === '/login' || req.path === '/register') {

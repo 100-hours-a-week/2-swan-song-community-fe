@@ -1,31 +1,20 @@
-import bcrypt from 'bcryptjs';
-import { users } from '../model/inMemoryDB.js';
-import { saveImage } from '../module/imageUtils.js';
-import { User } from '../model/user.js';
+import { userDao } from '../dao/userDaos.js';
 
-const findUserByEmail = email => {
-    return users.find(user => user.email === email);
-};
+class UserController {
+    checkNicknameAvailability(nickname) {
+        if (userDao.findUserByNickname(nickname) !== undefined) {
+            throw {
+                code: 4009,
+                message: '닉네임이 중복되었습니다.',
+                data: { isAvailable: false },
+            };
+        }
+        return {
+            code: 2000,
+            message: '사용 가능한 닉네임입니다',
+            data: { isAvailable: true },
+        };
+    }
+}
 
-const findUserByNickname = nickname => {
-    return users.find(user => user.nickname === nickname);
-};
-
-const createUser = async (email, password, nickname, profileImage) => {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const profileImageUrl = profileImage ? await saveImage(profileImage) : null; // 이미지 저장
-    const newUser = new User(email, nickname, hashedPassword, profileImageUrl);
-    users.push(newUser);
-    return newUser;
-};
-
-const checkNicknameAvailability = nickname => {
-    return !findUserByNickname(nickname);
-};
-
-export default {
-    findUserByEmail,
-    findUserByNickname,
-    createUser,
-    checkNicknameAvailability,
-};
+export const userController = new UserController();

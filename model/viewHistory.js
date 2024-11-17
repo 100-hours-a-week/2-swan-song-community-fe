@@ -1,11 +1,9 @@
 let autoIncrementViewHistoryId = 1;
 
-class viewHistory {
+export class ViewHistory {
     constructor(ipAddress, postId) {
-        this.id = autoIncrementViewCounterId++;
+        this.id = autoIncrementViewHistoryId++;
         this.ipAddress = ipAddress;
         this.postId = postId;
     }
 }
-
-module.exports = viewHistory;

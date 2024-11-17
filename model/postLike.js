@@ -1,11 +1,9 @@
 let autoIncrementPostLikeId = 1;
 
-class PostLike {
+export class PostLike {
     constructor(userId, postId) {
-        this.id = autoIncrementPostLikeId++;
+        this.likeId = autoIncrementPostLikeId++;
         this.userId = userId;
         this.postId = postId;
     }
 }
-
-module.exports = PostLike;
