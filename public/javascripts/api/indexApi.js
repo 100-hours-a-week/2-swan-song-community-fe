@@ -30,7 +30,7 @@ const renderPosts = posts => {
 
     posts.forEach(post => {
         const profileImageUrl =
-            post.profileImageUrl || './images/User_Default_Profile.svg';
+            post.profileImageUrl || './images/assets/User_Default_Profile.svg';
         const formattedDate = formatDate(new Date(post.createdDateTime));
 
         const postItemHTML = `

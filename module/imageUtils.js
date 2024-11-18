@@ -8,7 +8,7 @@ export const deleteImage = async imagePath => {
     const imageFullPath = imagePath.startsWith('public')
         ? imagePath
         : path.join('public', imagePath);
-        
+
     try {
         await fs.promises.unlink(imageFullPath);
     } catch (err) {

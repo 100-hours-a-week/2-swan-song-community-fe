@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const profileImageUrl =
                 comment.author.profileImageUrl ||
-                '/images/User_Default_Profile.svg';
+                '/images/assets/User_Default_Profile.svg';
             const date = new Date(comment.createdDateTime);
 
             commentEl.innerHTML = `

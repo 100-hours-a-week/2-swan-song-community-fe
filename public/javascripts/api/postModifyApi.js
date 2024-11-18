@@ -41,7 +41,7 @@ const renderPostImage = imageUrl => {
             <button class="remove-image-btn" type="button" onclick="removeImageButtonAction()"> 
                 <img
                     class="remove-image"
-                    src="../images/Close_square_light.svg"
+                    src="../images/assets/Close_square_light.svg"
                     alt="이미지 삭제"
                 />
             </button>

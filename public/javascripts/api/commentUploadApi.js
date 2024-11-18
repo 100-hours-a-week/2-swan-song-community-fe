@@ -23,7 +23,7 @@ const createComment = async comment => {
 
     const profileImageUrl = comment.profileImageUrl
         ? comment.profileImageUrl
-        : '/images/User_Default_Profile.svg';
+        : '/images/assets/User_Default_Profile.svg';
 
     const date = new Date(comment.createdDateTime);
     const formattedDate = formatDate(date);
