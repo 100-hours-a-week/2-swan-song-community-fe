@@ -39,6 +39,7 @@ postRouter.use(checkAuthorization);
 postRouter.get('/:postId', async (req, res) => {
     const postId = parseInt(req.params.postId);
     const commentFlag = req.query.comment ? req.query.comment : 'y';
+    const user = getLoggedInUser(req.cookies.session_id);
 
     // postId가 숫자가 아니거나 1보다 작거나, commentFlag가 y나 n이 아닌 경우 400 에러 반환
     if (
@@ -57,7 +58,7 @@ postRouter.get('/:postId', async (req, res) => {
         const result = postController.findDetailPostInfo(
             postId,
             commentFlag,
-            req.ip,
+            user.userId,
         );
         res.status(200).json(result);
     } catch (errorResponse) {

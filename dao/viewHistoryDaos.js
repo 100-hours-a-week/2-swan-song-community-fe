@@ -8,7 +8,7 @@ class IViewHistoryDao {
         }
     }
 
-    countViewHistoriesByReqIpAndPostId(reqIp, postId) {
+    countViewHistoriesByUserIdAndPostId(userId, postId) {
         throw new Error('구현되지 않은 메소드입니다.');
     }
 
@@ -27,13 +27,13 @@ class InMemoryViewHistoryDao extends IViewHistoryDao {
         this.viewHistories = viewHistories; // 기존 inMemDB의 viewHistories 사용
     }
 
-    existsViewHistoriesByReqIpAndPostId(reqIp, postId) {
+    existsViewHistoriesByUserIdAndPostId(userId, postId) {
         const viewHistoryId = binarySearch(
             this.viewHistories,
-            { reqIp, postId },
-            (a, b) => a.reqIp === b.reqIp && a.postId === b.postId,
+            { userId, postId },
+            (a, b) => a.userId === b.userId && a.postId === b.postId,
             (a, b) => {
-                if (a.reqIp != b.reqIp) return a.reqIp < b.reqIp;
+                if (a.userId != b.userId) return a.userId < b.userId;
                 else return a.postId < b.postId;
             },
         );
@@ -51,8 +51,8 @@ class InMemoryViewHistoryDao extends IViewHistoryDao {
 
     createViewHistory(viewHistory) {
         if (
-            !this.existsViewHistoriesByReqIpAndPostId(
-                viewHistory.reqIp,
+            !this.existsViewHistoriesByUserIdAndPostId(
+                viewHistory.userId,
                 viewHistory.postId,
             )
         ) {

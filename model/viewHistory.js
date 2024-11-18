@@ -1,9 +1,9 @@
 let autoIncrementViewHistoryId = 1;
 
 export class ViewHistory {
-    constructor(ipAddress, postId) {
+    constructor(userId, postId) {
         this.id = autoIncrementViewHistoryId++;
-        this.ipAddress = ipAddress;
+        this.userId = userId;
         this.postId = postId;
     }
 }

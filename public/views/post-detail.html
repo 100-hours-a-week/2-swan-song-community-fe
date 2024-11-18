@@ -16,6 +16,7 @@
         <script src="../javascripts/api/postDetailApi.js" defer></script>
         <script src="../javascripts/api/commentUploadApi.js" defer></script>
         <script src="../javascripts/api/postDeleteApi.js" defer></script>
+        <script src="../javascripts/api/postLikeApi.js" defer></script>
         <script src="../javascripts/view/postDetail.js" defer></script>
     </head>
     <body>
@@ -73,7 +74,7 @@
                 <p></p>
             </div>
             <div class="post-reaction">
-                <a class="btn-reaction">
+                <a id="likeBtn" class="btn-reaction">
                     <span id="likeCountText">123</span>
                     <span>좋아요 수</span>
                 </a>

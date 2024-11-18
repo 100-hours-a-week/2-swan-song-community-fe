@@ -14,10 +14,10 @@ class PostController {
         this.postDao = postDao;
     }
 
-    findDetailPostInfo(postId, commentFlag, reqIp) {
+    findDetailPostInfo(postId, commentFlag, userId) {
         const post = this.postDao.findById(postId);
 
-        viewHistoryDao.createViewHistory(new ViewHistory(reqIp, post.id));
+        viewHistoryDao.createViewHistory(new ViewHistory(userId, post.id));
 
         const author = userDao.findById(post.authorId);
 
@@ -41,6 +41,9 @@ class PostController {
                 name: author.nickname,
                 profileImageUrl: author.profileImageUrl,
             },
+            isLiked: likes.some(
+                l => l.postId === post.id && l.userId === userId,
+            ),
             likeCount: likes.filter(l => l.postId === post.id).length,
             viewCount: viewHistoryDao.countViewHistoriesByPostId(post.id),
             commentCount: postComments.length,
