@@ -6,7 +6,7 @@ import { Post } from '../model/post.js';
 import { Comment } from '../model/comment.js';
 import { ViewHistory } from '../model/viewHistory.js';
 import { PostLike } from '../model/postLike.js';
-import { saveImage } from '../module/imageUtils.js';
+import { saveImage, deleteImage } from '../module/imageUtils.js';
 
 class PostController {
     constructor(postDao) {
@@ -35,8 +35,11 @@ class PostController {
             title: post.title,
             content: post.content,
             imageUrl: post.contentImageUrl,
-            authorName: author.nickname,
-            profileImageUrl: author.profileImageUrl,
+            author: {
+                id: author.userId,
+                name: author.nickname,
+                profileImageUrl: author.profileImageUrl,
+            },
             likeCount: likes.filter(l => l.postId === post.id).length,
             viewCount: viewHistoryDao.countViewHistoriesByPostId(post.id),
             commentCount: postComments.length,
@@ -52,8 +55,11 @@ class PostController {
                     commentId: c.commentId,
                     content: c.content,
                     createdDateTime: c.createdDateTime,
-                    authorName: author.nickname,
-                    profileImageUrl: author.profileImageUrl,
+                    author: {
+                        id: author.userId,
+                        name: author.nickname,
+                        profileImageUrl: author.profileImageUrl,
+                    },
                 };
             });
         }
@@ -117,6 +123,32 @@ class PostController {
         this.postDao.createPost(post);
 
         return { code: 2001, message: '성공', data: { postId: post.id } };
+    }
+
+    async updatePost(postId, updatePostDto) {
+        const { title, content, contentImage, isRemoveImage } = updatePostDto;
+
+        const currentPost = this.postDao.findById(postId);
+
+        let contentImageUrl = currentPost.contentImageUrl;
+
+        if (isRemoveImage === true && currentPost.contentImageUrl) {
+            deleteImage(currentPost.contentImageUrl);
+            contentImageUrl = null;
+        }
+
+        if (contentImageUrl === null && contentImage) {
+            contentImageUrl = await saveImage(contentImage);
+        }
+
+        const updatedPostDto = { title, content, contentImageUrl };
+        const updatedPost = this.postDao.updatePost(postId, updatedPostDto);
+
+        return {
+            code: 2000,
+            message: '게시글 수정 성공',
+            data: { postId: updatedPost.id },
+        };
     }
 
     createPostLike(userId, postId) {

@@ -18,7 +18,6 @@ const fetchPosts = async () => {
     const data = await response.json();
 
     if (data.code === 2000) {
-        console.log(data.data);
         hasNext = data.data.hasNext;
         lastId = data.data.lastId;
         return data.data.content;

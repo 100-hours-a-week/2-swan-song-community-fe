@@ -79,8 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 const result = await loginUser(formData);
-                console.log(result);
                 if (result.code === 2000) {
+                    sessionStorage.setItem('user_id', result.data.userId);
                     window.location.href = '/';
                 } else {
                     document.querySelector('.login-error-helper').textContent =

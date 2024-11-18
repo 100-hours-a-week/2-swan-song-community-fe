@@ -5,6 +5,7 @@ import { postController } from '../controller/postController.js';
 import multer from 'multer';
 import cookieParser from 'cookie-parser';
 import { getLoggedInUser, isLoggedIn } from '../module/authUtils.js';
+import { postDao } from '../dao/postDaos.js'; // 게시글 작성자를 얻기 위해 추가. (router 에서 직접 dao 를 사용하는건 부적절해보이지만 일단은 수용)
 
 const postRouter = express.Router();
 const upload = multer({ dest: 'public/images/' }); // 이미지 업로드를 위한 multer 설정
@@ -107,6 +108,40 @@ postRouter.post('/', upload.single('postImage'), async (req, res) => {
     });
 
     return res.status(201).json(result);
+});
+
+// 게시글 수정
+postRouter.put('/:postId', upload.single('postImage'), async (req, res) => {
+    const postId = parseInt(req.params.postId);
+    const { title, content, removeImageFlag } = req.body;
+    const isRemoveImage = removeImageFlag === 'true';
+    const contentImage = req.file;
+    const user = getLoggedInUser(req.cookies.session_id);
+
+    if (!title || !content || isNaN(postId) || postId < 1) {
+        return res.status(400).json({
+            code: 4000,
+            message: '유효하지 않은 요청입니다',
+            data: null,
+        });
+    }
+
+    if (postDao.findById(postId).authorId !== user.userId) {
+        return res.status(403).json({
+            code: 4003,
+            message: '접근 권한이 없습니다',
+            data: null,
+        });
+    }
+
+    const result = await postController.updatePost(postId, {
+        title,
+        content,
+        contentImage,
+        isRemoveImage,
+    });
+
+    return res.status(200).json(result);
 });
 
 // 좋아요 추가

@@ -19,6 +19,10 @@ class IPostDao {
     getPaginatedPosts(size, lastId) {
         throw new Error('구현되지 않은 메소드입니다.');
     }
+
+    updatePost(postId, updatedPostDto) {
+        throw new Error('구현되지 않은 메소드입니다.');
+    }
 }
 
 // NOTE: Map 도 두어 단일 조회 성능을 높이려 했으나 데이터 양이 많지 않은 상황에서 자료구조를 두 개나(posts, postsMap) 사용하는 것이 과하다 생각하였고
@@ -68,9 +72,20 @@ class InMemoryPostDao extends IPostDao {
         }
 
         const hasNext = idx > 0;
-        const lastId = idx >= 0 ? this.posts[idx].id : -1;
+        const lastId = this.posts[idx] !== undefined ? this.posts[idx].id : -1;
 
         return { targetPosts, hasNext, lastId: lastId };
+    }
+
+    updatePost(postId, updatedPostDto) {
+        const post = this.findById(postId);
+        const { title, content, contentImageUrl } = updatedPostDto;
+
+        post.title = title;
+        post.content = content;
+        post.contentImageUrl = contentImageUrl;
+
+        return post;
     }
 }
 

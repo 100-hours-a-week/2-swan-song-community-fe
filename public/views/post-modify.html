@@ -13,7 +13,9 @@
         <link rel="stylesheet" href="../stylesheets/module/global-navbar.css" />
         <link rel="stylesheet" href="../stylesheets/view/post-modify.css" />
         <script src="../javascripts/module/globalNavbar.js" defer></script>
+        <script src="../javascripts/view/postModify.js" defer></script>
         <script src="../javascripts/api/globalNavbarApi.js" defer></script>
+        <script src="../javascripts/api/postModifyApi.js" defer></script>
         <script src="../javascripts/validator/postModify.js" defer></script>
     </head>
     <body>
@@ -49,7 +51,11 @@
         </header>
         <section class="post-modify">
             <a class="post-modify-str">게시글 수정</a>
-            <form class="post-modify-form" action="/post" method="post">
+            <form
+                class="post-modify-form"
+                id="postModifyForm"
+                enctype="multipart/form-data"
+            >
                 <div class="input-box">
                     <div>
                         <label for="title">제목*</label>
@@ -64,12 +70,12 @@
                 </div>
                 <div class="input-box">
                     <div>
-                        <label for="postContent">내용*</label>
+                        <label for="content">내용*</label>
                     </div>
                     <div>
                         <textarea
                             class="post-content"
-                            name="postContent"
+                            name="content"
                             cols="30"
                             placeholder="내용을 입력하세요"
                         ></textarea>
@@ -80,14 +86,22 @@
                     <div class="image-container">
                         <label for="image">이미지</label>
                         <input
+                            id="postModifyImageInput"
                             type="file"
-                            name="image"
+                            name="postImage"
                             placeholder="파일 선택"
                         />
+                        <div class="image-placeholder-wrapper"></div>
                     </div>
+                    <input
+                        id="removeImageFlagInput"
+                        type="hidden"
+                        name="removeImageFlag"
+                        value="false"
+                    />
                 </div>
                 <div class="btn-box">
-                    <button class="post-modify-btn btn-submit" type="button">
+                    <button class="post-modify-btn btn-submit" type="submit">
                         수정하기
                     </button>
                 </div>

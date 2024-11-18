@@ -17,6 +17,18 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const renderPostDetails = data => {
+        const userId = sessionStorage.getItem('user_id');
+
+        if (data.author.id === parseInt(userId)) {
+            document
+                .getElementById('btnPostModify')
+                .addEventListener('click', () => {
+                    window.location.href = `post-modify.html?postId=${data.postId}`;
+                });
+        } else {
+            document.getElementById('btnPostModify').remove();
+        }
+
         document.querySelector('.post-title').textContent = data.title;
 
         if (data.imageUrl) {
@@ -26,12 +38,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         document.querySelector('.content p').textContent = data.content;
 
-        document.querySelector('.author').textContent = data.authorName;
+        document.querySelector('.author').textContent = data.author.name;
 
         const date = new Date(data.createdDateTime);
         document.querySelector('.date').textContent = formatDate(date);
 
-        document.querySelector('.profile-image').src = data.profileImageUrl;
+        document.querySelector('.profile-image').src =
+            data.author.profileImageUrl;
 
         document.getElementById('likeCountText').textContent = data.likeCount;
         document.getElementById('viewCountText').textContent = data.viewCount;
@@ -46,25 +59,35 @@ document.addEventListener('DOMContentLoaded', () => {
             commentEl.classList.add('comment');
 
             const profileImageUrl =
-                comment.profileImageUrl || '/images/User_Default_Profile.svg';
+                comment.author.profileImageUrl ||
+                '/images/User_Default_Profile.svg';
             const date = new Date(comment.createdDateTime);
 
             commentEl.innerHTML = `
                 <div class="comment-left-info">
                     <div class="metadata">
                         <img class="profile-image" src="${profileImageUrl}" alt="프로필 이미지" />
-                        <a class="author">${comment.authorName}</a>
+                        <a class="author">${comment.author.name}</a>
                         <a class="date">${formatDate(date)}</a>
                     </div>
                     <div class="comment-content">
                         <p>${comment.content}</p>
                     </div>
+                    `;
+            if (comment.author.id === userId) {
+                commentEl.innerHTML += `    
+                    <div class="comment-right-info">
+                        <button onclick="setCommentButtonUpdate(${comment.commentId}, '${comment.content}')">수정</button>
+                        <button onclick="deleteComment(${comment.commentId})">삭제</button>
+                    </div>
                 </div>
-                <div class="comment-right-info">
-                    <button onclick="setCommentButtonUpdate(${comment.commentId}, '${comment.content}')">수정</button>
-                    <button onclick="deleteComment(${comment.commentId})">삭제</button>
+                `;
+            } else {
+                commentEl.innerHTML += `    
+                    <div class="comment-right-info"></div>
                 </div>
-            `;
+                `;
+            }
 
             commentList.appendChild(commentEl);
         });
