@@ -1,3 +1,4 @@
+import 'express-async-errors';
 import { likes, comments } from '../model/inMemoryDB.js';
 import { postDao } from '../dao/postDaos.js';
 import { viewHistoryDao } from '../dao/viewHistoryDaos.js';

@@ -1,5 +1,6 @@
 const IMAGE_PATH = 'public/images/';
 
+import 'express-async-errors';
 import fs from 'fs';
 import path from 'path';
 

@@ -1,6 +1,7 @@
 // api/v1/posts
 
 import express from 'express';
+import 'express-async-errors';
 import { postController } from '../controller/postController.js';
 import multer from 'multer';
 import cookieParser from 'cookie-parser';

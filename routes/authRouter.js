@@ -1,6 +1,7 @@
 // /api/v1/auth
 
 import express from 'express';
+import 'express-async-errors';
 import { userController } from '../controller/userController.js';
 import { authController } from '../controller/authController.js';
 import multer from 'multer';

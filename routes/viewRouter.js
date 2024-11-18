@@ -1,4 +1,5 @@
 import express from 'express';
+import 'express-async-errors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { Router } from 'express';

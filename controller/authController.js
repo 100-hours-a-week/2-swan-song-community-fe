@@ -1,3 +1,4 @@
+import 'express-async-errors';
 import bcrypt from 'bcryptjs';
 import { User } from '../model/user.js';
 import { userDao } from '../dao/userDaos.js';
