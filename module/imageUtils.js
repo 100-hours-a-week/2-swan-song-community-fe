@@ -6,7 +6,7 @@ import path from 'path';
 // 이미지 삭제
 export const deleteImage = async imagePath => {
     try {
-        await fs.promises.unlink(filePath);
+        await fs.promises.unlink(imagePath);
     } catch (err) {
         console.error(`이미지 삭제 중 오류 발생: ${err.message}`);
     }

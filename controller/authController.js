@@ -7,19 +7,22 @@ import {
     removeSession,
     removeSessionByUserId,
 } from '../module/authUtils.js';
-import { saveImage } from '../module/imageUtils.js';
+import { deleteImage, saveImage } from '../module/imageUtils.js';
 
 class AuthController {
     async register(email, password, nickname, profileImage) {
         if (userDao.findByEmail(email)) {
+            if (profileImage) deleteImage(profileImage.path);
+            
             throw {
                 code: 4009,
                 message: '이미 가입된 이메일입니다',
                 data: null,
             };
         }
-
+        
         if (userDao.findByNickname(nickname)) {
+            if (profileImage) deleteImage(profileImage.path);
             throw {
                 code: 4009,
                 message: '닉네임이 중복되었습니다',
