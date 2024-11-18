@@ -23,6 +23,10 @@ class IPostDao {
     updatePost(postId, updatedPostDto) {
         throw new Error('구현되지 않은 메소드입니다.');
     }
+
+    deletePost(post) {
+        throw new Error('구현되지 않은 메소드입니다.');
+    }
 }
 
 // NOTE: Map 도 두어 단일 조회 성능을 높이려 했으나 데이터 양이 많지 않은 상황에서 자료구조를 두 개나(posts, postsMap) 사용하는 것이 과하다 생각하였고
@@ -86,6 +90,11 @@ class InMemoryPostDao extends IPostDao {
         post.contentImageUrl = contentImageUrl;
 
         return post;
+    }
+
+    deletePost(post) {
+        const postIdx = this.posts.indexOf(post);
+        this.posts.splice(postIdx, 1);
     }
 }
 

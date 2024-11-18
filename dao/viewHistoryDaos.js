@@ -15,6 +15,10 @@ class IViewHistoryDao {
     createViewHistory(viewHistory) {
         throw new Error('구현되지 않은 메소드입니다.');
     }
+
+    deleteViewHistoriesByPostId(postId) {
+        throw new Error('구현되지 않은 메소드입니다.');
+    }
 }
 
 class InMemoryViewHistoryDao extends IViewHistoryDao {
@@ -54,6 +58,16 @@ class InMemoryViewHistoryDao extends IViewHistoryDao {
         ) {
             this.viewHistories.push(viewHistory);
         }
+    }
+
+    deleteViewHistoriesByPostId(postId) {
+        const historiesToDelete = this.viewHistories.filter(
+            v => v.postId === postId,
+        );
+        historiesToDelete.forEach(v => {
+            const idx = this.viewHistories.indexOf(v);
+            this.viewHistories.splice(idx, 1);
+        });
     }
 }
 

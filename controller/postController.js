@@ -152,6 +152,29 @@ class PostController {
         };
     }
 
+    deletePost(postId) {
+        const post = this.postDao.findById(postId);
+
+        const commentsToDelete = comments.filter(c => c.postId === post.id);
+        commentsToDelete.forEach(c => {
+            comments.splice(comments.indexOf(c), 1);
+        });
+
+        const likesToDelete = likes.filter(l => l.postId === post.id);
+        likesToDelete.forEach(l => {
+            likes.splice(likes.indexOf(l), 1);
+        });
+
+        viewHistoryDao.deleteViewHistoriesByPostId(post.id);
+
+        this.postDao.deletePost(post);
+
+        if (post.contentImageUrl) {
+            deleteImage(post.contentImageUrl);
+        }
+        return;
+    }
+
     createPostLike(userId, postId) {
         const post = this.postDao.findById(postId);
 

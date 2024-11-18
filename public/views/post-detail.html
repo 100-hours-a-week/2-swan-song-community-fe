@@ -15,6 +15,7 @@
         <script src="../javascripts/api/globalNavbarApi.js" defer></script>
         <script src="../javascripts/api/postDetailApi.js" defer></script>
         <script src="../javascripts/api/commentUploadApi.js" defer></script>
+        <script src="../javascripts/api/postDeleteApi.js" defer></script>
         <script src="../javascripts/view/postDetail.js" defer></script>
     </head>
     <body>
@@ -31,7 +32,7 @@
                     <img
                         id="profileDropDownToggle"
                         class="profile-image"
-                        src="../images/my-profile.png"
+                        src="../images/assets/my-profile.png"
                         alt="목록"
                     />
                     <ul class="profile-menu">
@@ -103,7 +104,7 @@
                         <div class="metadata">
                             <img
                                 class="profile-image"
-                                src="../images/my-profile.png"
+                                src="../images/assets/my-profile.png"
                                 alt="프로필 이미지"
                             />
                             <a class="author"
@@ -130,7 +131,7 @@
                         <div class="metadata">
                             <img
                                 class="profile-image"
-                                src="../images/my-profile.png"
+                                src="../images/assets/my-profile.png"
                                 alt="프로필 이미지"
                             />
                             <a class="author"
@@ -162,7 +163,9 @@
                     <button id="btnCancelPostDelete" class="cancel">
                         취소
                     </button>
-                    <button class="confirm">확인</button>
+                    <button id="btnPostDeleteConfirm" class="confirm">
+                        확인
+                    </button>
                 </div>
             </div>
         </div>
