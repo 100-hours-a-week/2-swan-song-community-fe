@@ -46,7 +46,7 @@ class AuthController {
         return {
             code: 2001,
             message: '회원가입 성공',
-            data: { userId: newUser.userId },
+            data: { userId: newUser.id },
         };
     }
 
@@ -59,10 +59,10 @@ class AuthController {
 
         // 기존 세션에 저장된 로그인 기록 제거
         const existingSession = isLoggedIn(cookieSessionId);
-        if (existingSession && existingSession.userId === user.userId) {
+        if (existingSession && existingSession.id === user.id) {
             removeSession(cookieSessionId);
         }
-        removeSessionByUserId(user.userId);
+        removeSessionByUserId(user.id);
 
         const sessionId = addSession(user);
         res.cookie('session_id', sessionId);
@@ -71,7 +71,7 @@ class AuthController {
         return {
             code: 2000,
             message: '로그인 성공',
-            data: { userId: user.userId },
+            data: { userId: user.id },
         };
     }
 

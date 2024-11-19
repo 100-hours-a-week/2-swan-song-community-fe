@@ -41,7 +41,7 @@ class PostController {
             content: post.content,
             imageUrl: post.contentImageUrl,
             author: {
-                id: author.userId,
+                id: author.id,
                 name: author.nickname,
                 profileImageUrl: author.profileImageUrl,
             },
@@ -64,7 +64,7 @@ class PostController {
                     content: c.content,
                     createdDateTime: c.createdDateTime,
                     author: {
-                        id: author.userId,
+                        id: author.id,
                         name: author.nickname,
                         profileImageUrl: author.profileImageUrl,
                     },
@@ -127,7 +127,7 @@ class PostController {
         const contentImageUrl = contentImage
             ? await saveImage(contentImage)
             : null; // 이미지 저장
-        const post = new Post(title, content, contentImageUrl, author.userId);
+        const post = new Post(title, content, contentImageUrl, author.id);
         this.postDao.createPost(post);
 
         return { code: 2001, message: '성공', data: { postId: post.id } };
@@ -225,7 +225,7 @@ class PostController {
 
         const post = this.postDao.findById(postId);
 
-        const newComment = new Comment(content, author.userId, post.id);
+        const newComment = new Comment(content, author.id, post.id);
         this.commentDao.createComment(newComment);
 
         // newComment 에서 authorId 를 통해 author 정보를 찾아온다.

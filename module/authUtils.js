@@ -16,7 +16,7 @@ export function removeSession(sessionId) {
 // 특정 회원 로그인 세션 제거
 export function removeSessionByUserId(userId) {
     for (const sessionId in sessions) {
-        if (sessions[sessionId].userId === userId) {
+        if (sessions[sessionId].id === userId) {
             delete sessions[sessionId];
             break;
         }

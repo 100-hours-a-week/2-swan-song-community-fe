@@ -32,12 +32,9 @@ class InMemoryUserDao extends IUserDao {
     }
 
     findById(userId) {
-        // TODO: User 의 pk 는 id 가 아닌 userId 라 predicate 를 직접 정의했습니다. 이후에 userId 를 id 로 변경해야 합니다.
         const userIdx = binarySearch(
             this.users,
-            userId,
-            (user, id) => user.userId === id,
-            (user, id) => user.userId < id,
+            userId
         );
 
         if (userIdx === -1) {

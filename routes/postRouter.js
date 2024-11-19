@@ -58,7 +58,7 @@ postRouter.get('/:postId', async (req, res) => {
         const result = postController.findDetailPostInfo(
             postId,
             commentFlag,
-            user.userId,
+            user.id,
         );
         res.status(200).json(result);
     } catch (errorResponse) {
@@ -128,7 +128,7 @@ postRouter.put('/:postId', upload.single('postImage'), async (req, res) => {
         });
     }
 
-    if (postDao.findById(postId).authorId !== user.userId) {
+    if (postDao.findById(postId).authorId !== user.id) {
         return res.status(403).json({
             code: 4003,
             message: '접근 권한이 없습니다',
@@ -160,7 +160,7 @@ postRouter.post('/likes', async (req, res) => {
     }
 
     try {
-        const result = postController.createPostLike(user.userId, postId);
+        const result = postController.createPostLike(user.id, postId);
         res.status(201).json(result);
     } catch (errorResponse) {
         res.status(200).json(errorResponse);
@@ -181,7 +181,7 @@ postRouter.delete('/likes', async (req, res) => {
     }
 
     try {
-        postController.deletePostLike(user.userId, postId);
+        postController.deletePostLike(user.id, postId);
         res.status(204).send();
     } catch (errorResponse) {
         res.status(200).json(errorResponse);
@@ -201,7 +201,7 @@ postRouter.delete('/:postId', async (req, res) => {
         });
     }
 
-    if (postDao.findById(postId).authorId !== user.userId) {
+    if (postDao.findById(postId).authorId !== user.id) {
         return res.status(403).json({
             code: 4003,
             message: '접근 권한이 없습니다',
