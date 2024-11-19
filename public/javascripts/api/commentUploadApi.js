@@ -1,7 +1,15 @@
 const uploadPostComment = async () => {
     const commentCountText = document.getElementById('commentCountText');
     const postId = new URLSearchParams(location.search).get('postId');
-    const content = document.getElementById('commentInputFormTextarea').value;
+    const contentInputTextarea = document.getElementById('commentInputFormTextarea');
+    const content = contentInputTextarea.value.trim();
+
+    if (!content) {
+        alert('댓글 내용을 입력해주세요.');
+        contentInputTextarea.focus();
+        return;
+    }
+
     const response = await fetch('/api/v1/posts/comments', {
         method: 'POST',
         headers: {
@@ -15,6 +23,7 @@ const uploadPostComment = async () => {
         createComment(responseJson.data.comment);
         commentCountText.textContent =
             parseInt(commentCountText.textContent) + 1;
+        contentInputTextarea.value = '';
     }
 };
 
