@@ -7,7 +7,6 @@ const toggleModal = (modal, isOpen) => {
 
 // 요소 참조
 const deletePostBtn = document.getElementById('btnPostDelete');
-const deleteCommentBtn = document.getElementById('btnCommentDelete');
 
 const modals = {
     post: document.getElementById('modalPostDelete'),
@@ -23,9 +22,6 @@ const modalBackground = document.getElementById('modalBackground');
 
 // 이벤트 리스너
 deletePostBtn.addEventListener('click', () => toggleModal(modals.post, true));
-deleteCommentBtn.addEventListener('click', () =>
-    toggleModal(modals.comment, true),
-);
 
 cancelBtns.post.addEventListener('click', () =>
     toggleModal(modals.post, false),

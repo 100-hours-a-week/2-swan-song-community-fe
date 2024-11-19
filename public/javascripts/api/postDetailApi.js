@@ -43,7 +43,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const date = new Date(data.createdDateTime);
         document.querySelector('.date').textContent = formatDate(date);
 
-        document.getElementById('profileImage').src = data.author.profileImageUrl || '/images/assets/User_Default_Profile.svg';
+        document.getElementById('profileImage').src =
+            data.author.profileImageUrl ||
+            '/images/assets/User_Default_Profile.svg';
 
         if (data.isLiked) {
             document
@@ -88,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 commentEl.innerHTML += `    
                     <div class="comment-right-info">
                         <button onclick="setCommentButtonUpdate(${comment.commentId}, '${comment.content}')">수정</button>
-                        <button onclick="toggleModal(document.getElementById('modalCommentDelete'), true)">삭제</button>
+                        <button onclick="deleteComment(${comment.commentId})">삭제</button>
                     </div>
                 </div>
                 `;
@@ -105,3 +107,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     fetchPostDetails();
 });
+
+const deleteComment = commentId => {
+    const modal = document.getElementById('modalCommentDelete');
+    toggleModal(modal, true);
+    modal.dataset.commentId = commentId;
+};

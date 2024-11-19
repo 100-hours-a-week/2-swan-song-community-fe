@@ -1,7 +1,8 @@
 const uploadPostComment = async () => {
-    const commentCountText = document.getElementById('commentCountText');
     const postId = new URLSearchParams(location.search).get('postId');
-    const contentInputTextarea = document.getElementById('commentInputFormTextarea');
+    const contentInputTextarea = document.getElementById(
+        'commentInputFormTextarea',
+    );
     const content = contentInputTextarea.value.trim();
 
     if (!content) {
@@ -21,6 +22,8 @@ const uploadPostComment = async () => {
 
     if (responseJson.code === 2001) {
         createComment(responseJson.data.comment);
+
+        const commentCountText = document.getElementById('commentCountText');
         commentCountText.textContent =
             parseInt(commentCountText.textContent) + 1;
         contentInputTextarea.value = '';
@@ -32,6 +35,7 @@ const createComment = async comment => {
 
     const commentEl = document.createElement('div');
     commentEl.classList.add('comment');
+    commentEl.dataset.commentId = comment.commentId;
 
     const profileImageUrl = comment.profileImageUrl
         ? comment.profileImageUrl

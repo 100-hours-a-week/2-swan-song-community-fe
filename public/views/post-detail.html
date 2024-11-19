@@ -16,6 +16,7 @@
         <script src="../javascripts/api/postDetailApi.js" defer></script>
         <script src="../javascripts/api/commentUploadApi.js" defer></script>
         <script src="../javascripts/api/commentModifyApi.js" defer></script>
+        <script src="../javascripts/api/commentDeleteApi.js" defer></script>
         <script src="../javascripts/api/postDeleteApi.js" defer></script>
         <script src="../javascripts/api/postLikeApi.js" defer></script>
         <script src="../javascripts/view/postDetail.js" defer></script>
@@ -57,7 +58,7 @@
                 <div class="post-info">
                     <div class="left-info">
                         <img
-                        id="profileImage"
+                            id="profileImage"
                             class="profile-image"
                             src="../images/assets/my-profile.png"
                             alt="프로필 이미지"
@@ -175,7 +176,9 @@
                     <button id="btnCancelCommentDelete" class="cancel">
                         취소
                     </button>
-                    <button class="confirm">확인</button>
+                    <button id="btnCommentDeleteConfirm" class="confirm">
+                        확인
+                    </button>
                 </div>
             </div>
         </div>
