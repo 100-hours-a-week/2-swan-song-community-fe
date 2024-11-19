@@ -50,6 +50,21 @@ class AuthController {
         };
     }
 
+    checkNicknameAvailability(nickname) {
+        if (userDao.findUserByNickname(nickname) !== undefined) {
+            throw {
+                code: 4009,
+                message: '닉네임이 중복되었습니다.',
+                data: { isAvailable: false },
+            };
+        }
+        return {
+            code: 2000,
+            message: '사용 가능한 닉네임입니다',
+            data: { isAvailable: true },
+        };
+    }
+
     async login(res, cookieSessionId, email, password) {
         // 해당 사용자가 존재하는지, 비밀번호가 일치하는지 확인
         const user = await userDao.findByEmail(email);

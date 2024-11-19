@@ -2,7 +2,6 @@
 
 import express from 'express';
 import 'express-async-errors';
-import { userController } from '../controller/userController.js';
 import { authController } from '../controller/authController.js';
 import multer from 'multer';
 import cookieParser from 'cookie-parser';
@@ -91,7 +90,7 @@ authRouter.get('/check-nickname', (req, res) => {
     }
 
     try {
-        const result = userController.checkNicknameAvailability(nickname);
+        const result = authController.checkNicknameAvailability(nickname);
         res.status(200).json(result);
     } catch (errorResponse) {
         res.status(200).json(errorResponse);
