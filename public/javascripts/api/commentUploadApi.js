@@ -1,4 +1,5 @@
 const uploadPostComment = async () => {
+    const commentCountText = document.getElementById('commentCountText');
     const postId = new URLSearchParams(location.search).get('postId');
     const content = document.getElementById('commentInputFormTextarea').value;
     const response = await fetch('/api/v1/posts/comments', {
@@ -12,6 +13,8 @@ const uploadPostComment = async () => {
 
     if (responseJson.code === 2001) {
         createComment(responseJson.data.comment);
+        commentCountText.textContent =
+            parseInt(commentCountText.textContent) + 1;
     }
 };
 

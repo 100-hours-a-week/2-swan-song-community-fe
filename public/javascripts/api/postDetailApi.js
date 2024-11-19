@@ -17,9 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const renderPostDetails = data => {
-        const userId = sessionStorage.getItem('user_id');
+        const userId = parseInt(sessionStorage.getItem('user_id'));
 
-        if (data.author.id === parseInt(userId)) {
+        if (data.author.id === userId) {
             document
                 .getElementById('btnPostModify')
                 .addEventListener('click', () => {
