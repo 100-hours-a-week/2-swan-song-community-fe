@@ -27,7 +27,7 @@ class InMemoryViewHistoryDao extends IViewHistoryDao {
     }
 
     existsViewHistoriesByUserIdAndPostId(userId, postId) {
-        const viewHistoryId = this.viewHistories.indexOf(
+        const viewHistoryId = this.viewHistories.findIndex(
             v => v.userId === userId && v.postId === postId,
         );
 
@@ -43,14 +43,7 @@ class InMemoryViewHistoryDao extends IViewHistoryDao {
     }
 
     createViewHistory(viewHistory) {
-        if (
-            !this.existsViewHistoriesByUserIdAndPostId(
-                viewHistory.userId,
-                viewHistory.postId,
-            )
-        ) {
-            this.viewHistories.push(viewHistory);
-        }
+        this.viewHistories.push(viewHistory);
     }
 
     deleteViewHistoriesByPostId(postId) {
