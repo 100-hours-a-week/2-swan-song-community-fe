@@ -1,6 +1,7 @@
 import 'express-async-errors';
-import { likes, comments } from '../model/inMemoryDB.js';
+import { likes } from '../model/inMemoryDB.js';
 import { postDao } from '../dao/postDaos.js';
+import { commentDao } from '../dao/commentDaos.js';
 import { viewHistoryDao } from '../dao/viewHistoryDaos.js';
 import { userDao } from '../dao/userDaos.js';
 import { Post } from '../model/post.js';
@@ -10,16 +11,19 @@ import { PostLike } from '../model/postLike.js';
 import { saveImage, deleteImage } from '../module/imageUtils.js';
 
 class PostController {
-    constructor(postDao) {
+    constructor(postDao, commentDao, viewHistoryDao, userDao) {
         this.postDao = postDao;
+        this.commentDao = commentDao;
+        this.viewHistoryDao = viewHistoryDao;
+        this.userDao = userDao;
     }
 
     findDetailPostInfo(postId, commentFlag, userId) {
         const post = this.postDao.findById(postId);
 
-        viewHistoryDao.createViewHistory(new ViewHistory(userId, post.id));
+        this.viewHistoryDao.createViewHistory(new ViewHistory(userId, post.id));
 
-        const author = userDao.findById(post.authorId);
+        const author = this.userDao.findById(post.authorId);
 
         if (!author) {
             throw {
@@ -29,7 +33,7 @@ class PostController {
             };
         }
 
-        const postComments = comments.filter(c => c.postId === postId);
+        const postComments = this.commentDao.findByPostId(post.id);
 
         const data = {
             postId: post.id,
@@ -45,7 +49,7 @@ class PostController {
                 l => l.postId === post.id && l.userId === userId,
             ),
             likeCount: likes.filter(l => l.postId === post.id).length,
-            viewCount: viewHistoryDao.countViewHistoriesByPostId(post.id),
+            viewCount: this.viewHistoryDao.countViewHistoriesByPostId(post.id),
             commentCount: postComments.length,
             createdDateTime: post.createdDateTime,
         };
@@ -53,10 +57,10 @@ class PostController {
         // commentFlag에 따라 댓글 포함 여부 결정
         if (commentFlag === 'y') {
             data.comments = postComments.map(c => {
-                const author = userDao.findById(c.authorId);
+                const author = this.userDao.findById(c.authorId);
 
                 return {
-                    commentId: c.commentId,
+                    commentId: c.id,
                     content: c.content,
                     createdDateTime: c.createdDateTime,
                     author: {
@@ -82,13 +86,13 @@ class PostController {
         );
 
         const content = targetPosts.map(p => {
-            const author = userDao.findById(p.authorId);
+            const author = this.userDao.findById(p.authorId);
 
             return {
                 postId: p.id,
                 title: p.title,
                 likeCount: likes.filter(l => l.postId === p.id).length,
-                commentCount: comments.filter(c => c.postId === p.id).length,
+                commentCount: this.commentDao.findByPostId(p.id).length,
                 viewCount: viewHistoryDao.countViewHistoriesByPostId(p.id),
                 createdDateTime: p.createdDateTime,
                 authorName: author.nickname,
@@ -158,9 +162,9 @@ class PostController {
     deletePost(postId) {
         const post = this.postDao.findById(postId);
 
-        const commentsToDelete = comments.filter(c => c.postId === post.id);
+        const commentsToDelete = this.commentDao.findByPostId(post.id);
         commentsToDelete.forEach(c => {
-            comments.splice(comments.indexOf(c), 1);
+            this.commentDao.deleteComment(c.id);
         });
 
         const likesToDelete = likes.filter(l => l.postId === post.id);
@@ -168,7 +172,7 @@ class PostController {
             likes.splice(likes.indexOf(l), 1);
         });
 
-        viewHistoryDao.deleteViewHistoriesByPostId(post.id);
+        this.viewHistoryDao.deleteViewHistoriesByPostId(post.id);
 
         this.postDao.deletePost(post);
 
@@ -222,11 +226,11 @@ class PostController {
         const post = this.postDao.findById(postId);
 
         const newComment = new Comment(content, author.userId, post.id);
-        comments.push(newComment);
+        this.commentDao.createComment(newComment);
 
         // newComment 에서 authorId 를 통해 author 정보를 찾아온다.
         const commentResult = {
-            commentId: newComment.commentId,
+            commentId: newComment.id,
             content: newComment.content,
             postId: post.id,
             createdDateTime: newComment.createdDateTime,
@@ -242,9 +246,8 @@ class PostController {
     }
 
     deletePostComment(commentId) {
-        const commentIndex = findIndex(c => c.commentId === commentId);
-        splice(commentIndex, 1);
+        this.commentDao.deleteComment(commentId);
     }
 }
 
-export const postController = new PostController(postDao);
+export const postController = new PostController(postDao, commentDao, viewHistoryDao, userDao);
