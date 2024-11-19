@@ -38,3 +38,23 @@ modalBackground.addEventListener('click', () => {
     toggleModal(modals.post, false);
     toggleModal(modals.comment, false);
 });
+
+const setCommentButtonUpdate = (commentId, content) => {
+    const commentInputTextarea = document.getElementById(
+        'commentInputFormTextarea',
+    );
+    commentInputTextarea.value = content;
+    commentInputTextarea.focus();
+    commentInputTextarea.dataset.commentId = commentId;
+
+    const commentInputFormButton = document.getElementById(
+        'commentInputFormButton',
+    );
+    commentInputFormButton.textContent = '댓글 수정';
+    commentInputFormButton.removeEventListener('click', uploadPostComment);
+    commentInputFormButton.addEventListener('click', updatePostComment);
+};
+
+document
+    .getElementById('commentInputFormButton')
+    .addEventListener('click', uploadPostComment);

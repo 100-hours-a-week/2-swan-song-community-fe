@@ -67,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
         data.comments.forEach(comment => {
             const commentEl = document.createElement('div');
             commentEl.classList.add('comment');
+            commentEl.dataset.commentId = comment.commentId;
 
             const profileImageUrl =
                 comment.author.profileImageUrl ||

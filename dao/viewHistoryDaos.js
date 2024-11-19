@@ -1,5 +1,4 @@
 import { viewHistories } from '../model/inMemoryDB.js';
-import { binarySearch } from '../dao/algorithm.js';
 
 class IViewHistoryDao {
     constructor() {
@@ -28,14 +27,8 @@ class InMemoryViewHistoryDao extends IViewHistoryDao {
     }
 
     existsViewHistoriesByUserIdAndPostId(userId, postId) {
-        const viewHistoryId = binarySearch(
-            this.viewHistories,
-            { userId, postId },
-            (a, b) => a.userId === b.userId && a.postId === b.postId,
-            (a, b) => {
-                if (a.userId != b.userId) return a.userId < b.userId;
-                else return a.postId < b.postId;
-            },
+        const viewHistoryId = this.viewHistories.indexOf(
+            v => v.userId === userId && v.postId === postId,
         );
 
         if (viewHistoryId === -1) {
