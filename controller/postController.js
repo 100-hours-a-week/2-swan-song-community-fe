@@ -1,21 +1,27 @@
 import 'express-async-errors';
-import { likes } from '../model/inMemoryDB.js';
+
+// DAO
 import { postDao } from '../dao/postDaos.js';
 import { commentDao } from '../dao/commentDaos.js';
 import { viewHistoryDao } from '../dao/viewHistoryDaos.js';
 import { userDao } from '../dao/userDaos.js';
+import { postLikeDao } from '../dao/postLikeDaos.js';
+
+// Data Model
 import { Post } from '../model/post.js';
 import { Comment } from '../model/comment.js';
 import { ViewHistory } from '../model/viewHistory.js';
 import { PostLike } from '../model/postLike.js';
+
 import { saveImage, deleteImage } from '../module/imageUtils.js';
 
 class PostController {
-    constructor(postDao, commentDao, viewHistoryDao, userDao) {
+    constructor(postDao, commentDao, viewHistoryDao, userDao, postLikeDao) {
         this.postDao = postDao;
         this.commentDao = commentDao;
         this.viewHistoryDao = viewHistoryDao;
         this.userDao = userDao;
+        this.postLikeDao = postLikeDao;
     }
 
     findDetailPostInfo(postId, commentFlag, userId) {
@@ -45,10 +51,8 @@ class PostController {
                 name: author.nickname,
                 profileImageUrl: author.profileImageUrl,
             },
-            isLiked: likes.some(
-                l => l.postId === post.id && l.userId === userId,
-            ),
-            likeCount: likes.filter(l => l.postId === post.id).length,
+            isLiked: postLikeDao.existsByUserIdAndPostId(userId, post.id),
+            likeCount: postLikeDao.findByPostId(post.id).length,
             viewCount: this.viewHistoryDao.countViewHistoriesByPostId(post.id),
             commentCount: postComments.length,
             createdDateTime: post.createdDateTime,
@@ -91,9 +95,9 @@ class PostController {
             return {
                 postId: p.id,
                 title: p.title,
-                likeCount: likes.filter(l => l.postId === p.id).length,
+                likeCount: this.postLikeDao.findByPostId(p.id).length,
                 commentCount: this.commentDao.findByPostId(p.id).length,
-                viewCount: viewHistoryDao.countViewHistoriesByPostId(p.id),
+                viewCount: this.viewHistoryDao.countViewHistoriesByPostId(p.id),
                 createdDateTime: p.createdDateTime,
                 authorName: author.nickname,
                 profileImageUrl: author.profileImageUrl,
@@ -167,9 +171,9 @@ class PostController {
             this.commentDao.deleteComment(c.id);
         });
 
-        const likesToDelete = likes.filter(l => l.postId === post.id);
-        likesToDelete.forEach(l => {
-            likes.splice(likes.indexOf(l), 1);
+        const postLikesToDelete = this.postLikeDao.findByPostId(post.id);
+        postLikesToDelete.forEach(l => {
+            this.postLikeDao.deletePostLike(l);
         });
 
         this.viewHistoryDao.deleteViewHistoriesByPostId(post.id);
@@ -184,10 +188,9 @@ class PostController {
 
     createPostLike(userId, postId) {
         const post = this.postDao.findById(postId);
+        const postLike = this.postLikeDao.existsByUserIdAndPostId(userId, post.id);
 
-        const postLike = likes.find(l => l.postId === post.id);
-
-        if (postLike !== undefined) {
+        if (postLike === true) {
             throw {
                 code: 4009,
                 message: '이미 좋아요를 눌렀습니다',
@@ -195,21 +198,21 @@ class PostController {
             };
         }
 
-        const newPostLike = new PostLike(userId, postId);
-        likes.push(newPostLike);
+        const newPostLike = new PostLike(userId, post.id);
+        this.postLikeDao.createPostLike(newPostLike);
 
         return {
             code: 2001,
             message: '성공',
-            data: { likeId: newPostLike.likeId },
+            data: { likeId: newPostLike.id },
         };
     }
 
     deletePostLike(userId, postId) {
-        const postLikeIndex = likes.findIndex(l => {
-            return l.postId === postId && l.userId === userId;
-        });
-        if (postLikeIndex === -1) {
+        const post = this.postDao.findById(postId);
+        const postLike = this.postLikeDao.findByUserIdAndPostId(userId, post.id);
+
+        if (postLike === undefined) {
             throw {
                 code: 4004,
                 message: '좋아요를 찾을 수 없습니다',
@@ -217,7 +220,7 @@ class PostController {
             };
         }
 
-        likes.splice(postLikeIndex, 1);
+        this.postLikeDao.deletePostLike(postLike);
     }
 
     createPostComment(commentDto) {
@@ -250,4 +253,4 @@ class PostController {
     }
 }
 
-export const postController = new PostController(postDao, commentDao, viewHistoryDao, userDao);
+export const postController = new PostController(postDao, commentDao, viewHistoryDao, userDao, postLikeDao);
