@@ -27,8 +27,10 @@ class InMemoryViewHistoryDao extends IViewHistoryDao {
     }
 
     existsViewHistoriesByUserIdAndPostId(userId, postId) {
-        const viewHistoryId = this.viewHistories.indexOf(v => v.userId === userId && v.postId === postId);
-        
+        const viewHistoryId = this.viewHistories.indexOf(
+            v => v.userId === userId && v.postId === postId,
+        );
+
         if (viewHistoryId === -1) {
             return false;
         }

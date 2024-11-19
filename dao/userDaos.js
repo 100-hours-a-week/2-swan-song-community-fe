@@ -32,10 +32,7 @@ class InMemoryUserDao extends IUserDao {
     }
 
     findById(userId) {
-        const userIdx = binarySearch(
-            this.users,
-            userId
-        );
+        const userIdx = binarySearch(this.users, userId);
 
         if (userIdx === -1) {
             throw {

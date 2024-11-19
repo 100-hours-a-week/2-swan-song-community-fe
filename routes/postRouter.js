@@ -88,6 +88,100 @@ postRouter.get('/', async (req, res) => {
     return res.status(200).json(result);
 });
 
+// 댓글 추가
+postRouter.post('/comments', async (req, res) => {
+    const postId = parseInt(req.body.postId);
+    const content = req.body.content;
+    const user = getLoggedInUser(req.cookies.session_id);
+
+    if (!postId || !content) {
+        return res.status(400).json({
+            code: 4000,
+            message: '유효하지 않은 요청입니다',
+            data: null,
+        });
+    }
+
+    try {
+        const result = postController.createPostComment({
+            postId,
+            content,
+            author: user,
+        });
+        res.status(201).json(result);
+    } catch (errorResponse) {
+        res.status(200).json(errorResponse);
+    }
+});
+
+// 댓글 수정
+postRouter.put('/comments', async (req, res) => {
+    const commentId = parseInt(req.body.commentId);
+    const content = req.body.content;
+    const user = getLoggedInUser(req.cookies.session_id);
+
+    if (!content || isNaN(commentId) || commentId < 1) {
+        return res.status(400).json({
+            code: 4000,
+            message: '유효하지 않은 요청입니다',
+            data: null,
+        });
+    }
+
+    try {
+        const result = postController.updatePostComment(
+            commentId,
+            content,
+            user,
+        );
+        res.status(200).json(result);
+    } catch (errorResponse) {
+        res.status(200).json(errorResponse);
+    }
+});
+
+// 좋아요 추가
+postRouter.post('/likes', async (req, res) => {
+    const postId = parseInt(req.body.postId);
+    const user = getLoggedInUser(req.cookies.session_id);
+
+    if (!postId) {
+        return res.status(400).json({
+            code: 4000,
+            message: '유효하지 않은 요청입니다',
+            data: null,
+        });
+    }
+
+    try {
+        const result = postController.createPostLike(user.id, postId);
+        res.status(201).json(result);
+    } catch (errorResponse) {
+        res.status(200).json(errorResponse);
+    }
+});
+
+// 좋아요 삭제
+postRouter.delete('/likes', async (req, res) => {
+    const postId = parseInt(req.body.postId);
+    const user = getLoggedInUser(req.cookies.session_id);
+
+    if (!postId) {
+        return res.status(400).json({
+            code: 4000,
+            message: '유효하지 않은 요청입니다',
+            data: null,
+        });
+    }
+
+    try {
+        postController.deletePostLike(user.id, postId);
+        res.status(204).send();
+    } catch (errorResponse) {
+        res.status(200).json(errorResponse);
+    }
+});
+
 // 게시글 추가
 postRouter.post('/', upload.single('postImage'), async (req, res) => {
     const { title, content } = req.body;
@@ -146,48 +240,6 @@ postRouter.put('/:postId', upload.single('postImage'), async (req, res) => {
     return res.status(200).json(result);
 });
 
-// 좋아요 추가
-postRouter.post('/likes', async (req, res) => {
-    const postId = parseInt(req.body.postId);
-    const user = getLoggedInUser(req.cookies.session_id);
-
-    if (!postId) {
-        return res.status(400).json({
-            code: 4000,
-            message: '유효하지 않은 요청입니다',
-            data: null,
-        });
-    }
-
-    try {
-        const result = postController.createPostLike(user.id, postId);
-        res.status(201).json(result);
-    } catch (errorResponse) {
-        res.status(200).json(errorResponse);
-    }
-});
-
-// 좋아요 삭제
-postRouter.delete('/likes', async (req, res) => {
-    const postId = parseInt(req.body.postId);
-    const user = getLoggedInUser(req.cookies.session_id);
-
-    if (!postId) {
-        return res.status(400).json({
-            code: 4000,
-            message: '유효하지 않은 요청입니다',
-            data: null,
-        });
-    }
-
-    try {
-        postController.deletePostLike(user.id, postId);
-        res.status(204).send();
-    } catch (errorResponse) {
-        res.status(200).json(errorResponse);
-    }
-});
-
 // 게시글 삭제 (posts/like 와 경로가 겹쳐 게시글 삭제 API 를 아래에 위치시킴)
 postRouter.delete('/:postId', async (req, res) => {
     const postId = parseInt(req.params.postId);
@@ -211,32 +263,6 @@ postRouter.delete('/:postId', async (req, res) => {
 
     postController.deletePost(postId);
     return res.status(204).send();
-});
-
-// 댓글 추가
-postRouter.post('/comments', async (req, res) => {
-    const postId = parseInt(req.body.postId);
-    const content = req.body.content;
-    const user = getLoggedInUser(req.cookies.session_id);
-
-    if (!postId || !content) {
-        return res.status(400).json({
-            code: 4000,
-            message: '유효하지 않은 요청입니다',
-            data: null,
-        });
-    }
-
-    try {
-        const result = postController.createPostComment({
-            postId,
-            content,
-            author: user,
-        });
-        res.status(201).json(result);
-    } catch (errorResponse) {
-        res.status(200).json(errorResponse);
-    }
 });
 
 export default postRouter;

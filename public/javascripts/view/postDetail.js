@@ -40,15 +40,21 @@ modalBackground.addEventListener('click', () => {
 });
 
 const setCommentButtonUpdate = (commentId, content) => {
-    const commentInputTextarea = document.getElementById('commentInputFormTextarea');
+    const commentInputTextarea = document.getElementById(
+        'commentInputFormTextarea',
+    );
     commentInputTextarea.value = content;
     commentInputTextarea.focus();
     commentInputTextarea.dataset.commentId = commentId;
 
-    const commentInputFormButton = document.getElementById('commentInputFormButton');
+    const commentInputFormButton = document.getElementById(
+        'commentInputFormButton',
+    );
     commentInputFormButton.textContent = '댓글 수정';
     commentInputFormButton.removeEventListener('click', uploadPostComment);
     commentInputFormButton.addEventListener('click', updatePostComment);
-}
+};
 
-document.getElementById('commentInputFormButton').addEventListener('click', uploadPostComment);
+document
+    .getElementById('commentInputFormButton')
+    .addEventListener('click', uploadPostComment);

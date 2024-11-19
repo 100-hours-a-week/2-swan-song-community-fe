@@ -1,5 +1,7 @@
 const updatePostComment = async () => {
-    const commentInputTextarea = document.getElementById('commentInputFormTextarea');
+    const commentInputTextarea = document.getElementById(
+        'commentInputFormTextarea',
+    );
     const commentId = commentInputTextarea.dataset.commentId;
 
     const content = commentInputTextarea.value;
@@ -15,14 +17,23 @@ const updatePostComment = async () => {
         const responseJson = await response.json();
         if (responseJson.code === 2000) {
             const commentList = document.querySelector('.comment-list');
-            const commentEl = commentList.find((el) => el.dataset.commentId === commentId);
+            const commentEls =
+                commentList.querySelectorAll('[data-comment-id]');
+            const commentEl = Array.from(commentEls).find(
+                el => el.dataset.commentId === commentId,
+            );
             commentEl.querySelector('.comment-content p').textContent = content;
 
             commentInputTextarea.value = '';
 
-            const commentInputFormButton = document.getElementById('commentInputFormButton');
+            const commentInputFormButton = document.getElementById(
+                'commentInputFormButton',
+            );
             commentInputFormButton.textContent = '댓글 작성';
-            commentInputFormButton.removeEventListener('click', updatePostComment);
+            commentInputFormButton.removeEventListener(
+                'click',
+                updatePostComment,
+            );
             commentInputFormButton.addEventListener('click', uploadPostComment);
         }
     }

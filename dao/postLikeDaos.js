@@ -57,11 +57,15 @@ class InMemoryPostLikeDao extends IPostLikeDao {
     }
 
     findByUserIdAndPostId(userId, postId) {
-        return this.postLikes.find(c => c.userId === userId && c.postId === postId);
+        return this.postLikes.find(
+            c => c.userId === userId && c.postId === postId,
+        );
     }
 
     existsByUserIdAndPostId(userId, postId) {
-        return this.postLikes.some(c => c.userId === userId && c.postId === postId);
+        return this.postLikes.some(
+            c => c.userId === userId && c.postId === postId,
+        );
     }
 
     createPostLike(postLike) {

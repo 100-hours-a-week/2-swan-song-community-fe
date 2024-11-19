@@ -188,7 +188,10 @@ class PostController {
 
     createPostLike(userId, postId) {
         const post = this.postDao.findById(postId);
-        const postLike = this.postLikeDao.existsByUserIdAndPostId(userId, post.id);
+        const postLike = this.postLikeDao.existsByUserIdAndPostId(
+            userId,
+            post.id,
+        );
 
         if (postLike === true) {
             throw {
@@ -210,7 +213,10 @@ class PostController {
 
     deletePostLike(userId, postId) {
         const post = this.postDao.findById(postId);
-        const postLike = this.postLikeDao.findByUserIdAndPostId(userId, post.id);
+        const postLike = this.postLikeDao.findByUserIdAndPostId(
+            userId,
+            post.id,
+        );
 
         if (postLike === undefined) {
             throw {
@@ -248,9 +254,28 @@ class PostController {
         };
     }
 
+    updatePostComment(commentId, content) {
+        const updatedComment = this.commentDao.updateComment(
+            commentId,
+            content,
+        );
+
+        return {
+            code: 2000,
+            message: '댓글 수정 성공',
+            data: { commentId: updatedComment.id },
+        };
+    }
+
     deletePostComment(commentId) {
         this.commentDao.deleteComment(commentId);
     }
 }
 
-export const postController = new PostController(postDao, commentDao, viewHistoryDao, userDao, postLikeDao);
+export const postController = new PostController(
+    postDao,
+    commentDao,
+    viewHistoryDao,
+    userDao,
+    postLikeDao,
+);

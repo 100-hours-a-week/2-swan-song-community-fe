@@ -20,7 +20,7 @@ class ICommentDao {
         throw new Error('구현되지 않은 메소드입니다.');
     }
 
-    updateComment(commentId, updatedCommentDto) {
+    updateComment(commentId, content) {
         throw new Error('구현되지 않은 메소드입니다.');
     }
 
@@ -58,13 +58,10 @@ class InMemoryCommentDao extends ICommentDao {
         return comment;
     }
 
-    updateComment(commentId, updatedCommentDto) {
+    updateComment(commentId, content) {
         const comment = this.findById(commentId);
-        const { title, content, contentImageUrl } = updatedCommentDto;
 
-        comment.title = title;
         comment.content = content;
-        comment.contentImageUrl = contentImageUrl;
 
         return comment;
     }
