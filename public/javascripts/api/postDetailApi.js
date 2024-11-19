@@ -46,6 +46,16 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.profile-image').src =
             data.author.profileImageUrl;
 
+        if (data.isLiked) {
+            document
+                .getElementById('likeBtn')
+                .classList.add('post-liked-active');
+        } else {
+            document
+                .getElementById('likeBtn')
+                .classList.remove('post-liked-active');
+        }
+
         document.getElementById('likeCountText').textContent = data.likeCount;
         document.getElementById('viewCountText').textContent = data.viewCount;
         document.getElementById('commentCountText').textContent =

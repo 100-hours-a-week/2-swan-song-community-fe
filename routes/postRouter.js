@@ -146,31 +146,6 @@ postRouter.put('/:postId', upload.single('postImage'), async (req, res) => {
     return res.status(200).json(result);
 });
 
-// 게시글 삭제
-postRouter.delete('/:postId', async (req, res) => {
-    const postId = parseInt(req.params.postId);
-    const user = getLoggedInUser(req.cookies.session_id);
-
-    if (isNaN(postId) || postId < 1) {
-        return res.status(400).json({
-            code: 4000,
-            message: '유효하지 않은 요청입니다',
-            data: null,
-        });
-    }
-
-    if (postDao.findById(postId).authorId !== user.userId) {
-        return res.status(403).json({
-            code: 4003,
-            message: '접근 권한이 없습니다',
-            data: null,
-        });
-    }
-
-    postController.deletePost(postId);
-    return res.status(204).send();
-});
-
 // 좋아요 추가
 postRouter.post('/likes', async (req, res) => {
     const postId = parseInt(req.body.postId);
@@ -211,6 +186,31 @@ postRouter.delete('/likes', async (req, res) => {
     } catch (errorResponse) {
         res.status(200).json(errorResponse);
     }
+});
+
+// 게시글 삭제 (posts/like 와 경로가 겹쳐 게시글 삭제 API 를 아래에 위치시킴)
+postRouter.delete('/:postId', async (req, res) => {
+    const postId = parseInt(req.params.postId);
+    const user = getLoggedInUser(req.cookies.session_id);
+
+    if (isNaN(postId) || postId < 1) {
+        return res.status(400).json({
+            code: 4000,
+            message: '유효하지 않은 요청입니다',
+            data: null,
+        });
+    }
+
+    if (postDao.findById(postId).authorId !== user.userId) {
+        return res.status(403).json({
+            code: 4003,
+            message: '접근 권한이 없습니다',
+            data: null,
+        });
+    }
+
+    postController.deletePost(postId);
+    return res.status(204).send();
 });
 
 // 댓글 추가

@@ -146,6 +146,10 @@ body {
     padding: 20px;
 }
 
+.post-liked-active {
+    background-color: #e5b3b3 !important;
+}
+
 .btn-reaction {
     display: flex;
     flex-direction: column;
