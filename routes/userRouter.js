@@ -1,12 +1,14 @@
-// /api/v1/user
+// /api/v1/users
 
 import express from 'express';
 import 'express-async-errors';
 import { userController } from '../controller/userController.js';
+import multer from 'multer';
 import cookieParser from 'cookie-parser';
 import { getLoggedInUser, isLoggedIn } from '../module/authUtils.js';
 
 const userRouter = express.Router();
+const upload = multer({ dest: 'public/images/' }); // 이미지 업로드를 위한 multer 설정
 
 // URL-encoded 데이터 파싱을 위한 미들웨어 추가
 userRouter.use(express.urlencoded({ extended: true }));
@@ -40,6 +42,33 @@ userRouter.get('/me', async (req, res) => {
     try {
         const result = userController.findUserInfo(user.id);
 
+        res.status(200).json(result);
+    } catch (errorResponse) {
+        res.status(200).json(errorResponse);
+    }
+});
+
+// 회원정보 수정
+userRouter.put('/me', upload.single('profileImage'), async (req, res) => {
+    const { nickname } = req.body;
+    const profileImage = req.file;
+
+    if (!nickname && !profileImage) {
+        return res.status(400).json({
+            code: 4000,
+            message: '유효하지 않은 요청입니다.',
+            data: null,
+        });
+    }
+
+    const sessionId = req.cookies.session_id;
+    const user = getLoggedInUser(sessionId);
+
+    try {
+        const result = await userController.updateUser(user.id, {
+            nickname,
+            profileImage,
+        });
         res.status(200).json(result);
     } catch (errorResponse) {
         res.status(200).json(errorResponse);

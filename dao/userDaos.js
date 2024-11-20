@@ -23,6 +23,10 @@ class IUserDao {
     createUser(user) {
         throw new Error('구현되지 않은 메소드입니다.');
     }
+
+    updateUser(userId, updatedUserDto) {
+        throw new Error('구현되지 않은 메소드입니다.');
+    }
 }
 
 class InMemoryUserDao extends IUserDao {
@@ -57,6 +61,13 @@ class InMemoryUserDao extends IUserDao {
 
     createUser(user) {
         this.users.push(user);
+    }
+
+    updateUser(userId, updatedUserDto) {
+        const user = this.findById(userId);
+
+        user.nickname = updatedUserDto.nickname;
+        user.profileImageUrl = updatedUserDto.profileImageUrl;
     }
 }
 

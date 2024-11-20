@@ -32,9 +32,11 @@ class AuthController {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
+
         const profileImageUrl = profileImage
             ? await saveImage(profileImage)
             : null;
+
         const newUser = new User(
             email,
             nickname,
