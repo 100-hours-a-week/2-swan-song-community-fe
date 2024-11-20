@@ -27,7 +27,12 @@ class PostController {
     findDetailPostInfo(postId, commentFlag, userId) {
         const post = this.postDao.findById(postId);
 
-        if (!this.viewHistoryDao.existsViewHistoriesByUserIdAndPostId(userId, postId)) {
+        if (
+            !this.viewHistoryDao.existsViewHistoriesByUserIdAndPostId(
+                userId,
+                postId,
+            )
+        ) {
             this.viewHistoryDao.createViewHistory(
                 new ViewHistory(userId, post.id),
             );

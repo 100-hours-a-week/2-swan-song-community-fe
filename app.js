@@ -3,6 +3,7 @@ import 'express-async-errors';
 import viewRouter from './routes/viewRouter.js';
 import bodyParser from 'body-parser';
 import authRouter from './routes/authRouter.js';
+import userRouter from './routes/userRouter.js';
 import postRouter from './routes/postRouter.js';
 
 const app = express();
@@ -14,6 +15,7 @@ app.use(bodyParser.json());
 
 app.use(viewRouter);
 app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/users', userRouter);
 app.use('/api/v1/posts', postRouter);
 
 // 에러 핸들러
