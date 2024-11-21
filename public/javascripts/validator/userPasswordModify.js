@@ -3,9 +3,9 @@ const validatePassword = () => {
     const passwordCheckInput = document.querySelector(
         'input[name="password-check"]',
     );
-    const passwordHelperText = document.getElementById('password-helper-text');
+    const passwordHelperText = document.getElementById('passwordHelperText');
     const passwordCheckHelperText = document.getElementById(
-        'password-check-helper-text',
+        'passwordCheckHelperText',
     );
     const password = passwordInput.value.trim();
     const passwordCheck = passwordCheckInput.value.trim();

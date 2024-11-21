@@ -69,6 +69,11 @@ class InMemoryUserDao extends IUserDao {
         user.nickname = updatedUserDto.nickname;
         user.profileImageUrl = updatedUserDto.profileImageUrl;
     }
+
+    updateUserPassword(userId, hashedPassword) {
+        const user = this.findById(userId);
+        user.password = hashedPassword;
+    }
 }
 
 export const userDao = new InMemoryUserDao(users);

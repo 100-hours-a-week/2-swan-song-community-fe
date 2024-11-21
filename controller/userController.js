@@ -1,4 +1,5 @@
 import 'express-async-errors';
+import bcrypt from 'bcryptjs';
 
 import { userDao } from '../dao/userDaos.js';
 
@@ -78,6 +79,36 @@ class UserController {
             if (profileImage) {
                 deleteImage(profileImage.path);
             }
+            throw errorResponse;
+        }
+    }
+
+    async updateUserPassword(userId, updateUserPasswordDto) {
+        const { newPassword, passwordCheck } = updateUserPasswordDto;
+
+        try {
+            if (newPassword !== passwordCheck) {
+                throw {
+                    code: 4000,
+                    message: '비밀번호가 일치하지 않습니다',
+                    data: null,
+                };
+            }
+
+            const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+            this.userDao.updateUserPassword(userId, hashedPassword);
+
+            const data = {
+                userId: userId,
+            };
+
+            return {
+                code: 2000,
+                message: '비밀번호 수정 성공',
+                data: data,
+            };
+        } catch (errorResponse) {
             throw errorResponse;
         }
     }

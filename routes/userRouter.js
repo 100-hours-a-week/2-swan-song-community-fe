@@ -80,4 +80,43 @@ userRouter.put('/me', upload.single('profileImage'), async (req, res) => {
     }
 });
 
+userRouter.patch('/me/password', upload.none(), async (req, res) => {
+    const sessionId = req.cookies.session_id;
+    const user = getLoggedInUser(sessionId);
+
+    const { newPassword, passwordCheck } = req.body;
+
+    // 비밀번호가 Base64 인코딩인지 확인
+    if (
+        !/^[A-Za-z0-9+/=]+$/.test(newPassword) ||
+        !/^[A-Za-z0-9+/=]+$/.test(passwordCheck)
+    ) {
+        return res.status(400).json({
+            code: 4000,
+            message: '비밀번호는 Base64 인코딩 형식이어야 합니다',
+        });
+    }
+
+    // 비밀번호 길이 확인
+    const decodedPassword = Buffer.from(newPassword, 'base64').toString(
+        'utf-8',
+    );
+    if (decodedPassword.length < 8 || decodedPassword.length > 20) {
+        return res.status(400).json({
+            code: 4000,
+            message: '비밀번호는 8자 이상 20자 이하이어야 합니다',
+        });
+    }
+
+    try {
+        const result = await userController.updateUserPassword(user.id, {
+            newPassword: newPassword,
+            passwordCheck: passwordCheck,
+        });
+        res.status(200).json(result);
+    } catch (errorResponse) {
+        res.status(200).json(errorResponse);
+    }
+});
+
 export default userRouter;
