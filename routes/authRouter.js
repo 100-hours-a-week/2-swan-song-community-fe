@@ -133,13 +133,14 @@ authRouter.post('/signin', upload.none(), async (req, res) => {
 // 로그아웃
 authRouter.post('/logout', (req, res) => {
     const sessionId = req.cookies.session_id;
+
     if (sessionId === undefined) {
         return res
             .status(401)
             .json({ code: 4001, message: '인증이 필요합니다.', data: null });
     }
 
-    authController.logout(sessionId);
+    authController.logout(res, sessionId);
 });
 
 export default authRouter;

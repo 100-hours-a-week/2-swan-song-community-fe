@@ -95,7 +95,7 @@ class AuthController {
     async logout(res, sessionId) {
         removeSession(sessionId);
         res.clearCookie('session_id');
-        res.status(204).json({ code: 2000, message: '로그아웃 성공' });
+        res.status(204).end();
     }
 }
 
