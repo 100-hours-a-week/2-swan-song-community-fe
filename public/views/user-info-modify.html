@@ -13,6 +13,7 @@
         <script src="../javascripts/view/userInfoModify.js" defer></script>
         <script src="../javascripts/validator/userInfoModify.js" defer></script>
         <script src="../javascripts/api/globalNavbarApi.js" defer></script>
+        <script src="../javascripts/api/userInfoModifyApi.js" defer></script>
     </head>
     <body>
         <header class="global-navbar">
@@ -48,30 +49,25 @@
         <section class="user-info-modify">
             <div class="user-info-modify-logo-str">회원정보수정</div>
             <form
+                id="userInfoModifyForm"
                 class="user-info-modify-form"
-                action="/user-info-modify"
-                method="post"
+                enctype="multipart/form-data"
             >
                 <div class="input-box-image">
                     <label for="profile-image">프로필 사진*</label>
                     <div class="image-placeholder-wrapper">
                         <input
                             type="file"
-                            id="profile-image"
-                            name="profile-image"
+                            id="profileImage"
+                            name="profileImage"
                             accept="image/*"
                         />
-                        <div
-                            class="profile-image-overlay"
-                            onclick="document.getElementById('profile-image').click()"
-                        >
+                        <div class="profile-image-overlay">
                             <div class="profile-image-overlay-guide">변경</div>
                         </div>
-                        <div
-                            class="image-placeholder"
-                            onclick="document.getElementById('profile-image').click()"
-                        >
+                        <div class="image-placeholder">
                             <img
+                                id="profileImagePreview"
                                 class="placeholder-cur-profile"
                                 src="../images/assets/my-profile.png"
                                 alt="plus"
@@ -81,35 +77,53 @@
                 </div>
                 <div class="input-box">
                     <label for="email">이메일</label>
-                    <a class="imale">amu@mal.fest</a>
+                    <a id="info-modify-email" class="emale">amu@mal.fest</a>
                 </div>
                 <div class="input-box">
                     <label for="nickname">닉네임</label>
                     <input type="text" name="nickname" placeholder="" />
                     <span class="helper-text"></span>
                 </div>
+                <input type="hidden" name="isProfileImageRemoved" value="" />
                 <div class="btn-box">
                     <button
+                        id="btnUserInfoModify"
                         class="user-info-modify-btn btn-submit"
-                        type="submit"
+                        type="button"
                     >
                         수정하기
                     </button>
-                    <a id="btn-user-delete" class="login-redirect-btn"
+                    <a id="btnUserDelete" class="login-redirect-btn"
                         >회원 탈퇴</a
                     >
                 </div>
             </form>
         </section>
-        <div id="modal-user-delete" class="modal-delete">
-            <div class="modal-delete-user">
+        <div id="modalUserProfileUpdate" class="modal modal-profile-update">
+            <div class="modal-inner">
+                <h4>프로필 사진 변경</h4>
+                <p>현재 프로필 사진을 제거하고 변경하시겠습니까?</p>
+                <div>
+                    <button id="btnCancelUserProfileUpdate" class="cancel">
+                        취소
+                    </button>
+                    <button id="btnConfirmUserProfileUpdate" class="confirm">
+                        확인
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="modalUserDelete" class="modal">
+            <div class="modal-inner">
                 <h4>회원탈퇴 하시겠습니까?</h4>
                 <p>작성된 게시글과 댓글은 삭제됩니다.</p>
                 <div>
-                    <button id="btn-cancel-user-delete" class="cancel">
+                    <button id="btnCancelUserDelete" class="cancel">
                         취소
                     </button>
-                    <button class="confirm">확인</button>
+                    <button id="btnConfirmUserDelete" class="confirm">
+                        확인
+                    </button>
                 </div>
             </div>
         </div>

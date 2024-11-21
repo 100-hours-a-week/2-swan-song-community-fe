@@ -1,3 +1,5 @@
+import { userDao } from '../dao/userDaos.js';
+
 const sessions = {}; // 로그인 세션을 저장
 
 // 로그인 세션 추가
@@ -23,9 +25,9 @@ export function removeSessionByUserId(userId) {
     }
 }
 
-// 로그인 세션 조회
+// 로그인 세션 조회 (회원을 두 저장소에서 다루니 동기화 문제 발생. 참조만 사용해 해결)
 export function getLoggedInUser(sessionId) {
-    return sessions[sessionId];
+    return userDao.findById(sessions[sessionId].id);
 }
 
 // 로그인 여부 확인

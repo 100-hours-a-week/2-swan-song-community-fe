@@ -32,28 +32,29 @@ class UserController {
     }
 
     async updateUser(userId, updateUserDto) {
-        const { nickname, profileImage } = updateUserDto;
+        const { nickname, isProfileImageRemoved, profileImage } = updateUserDto;
 
         try {
             const user = this.userDao.findById(userId);
 
-            if (nickname) {
-                if (this.userDao.findByNickname(nickname)) {
-                    throw {
-                        code: 4009,
-                        message: '이미 사용 중인 닉네임입니다',
-                        data: null,
-                    };
-                }
+            if (
+                user.nickname !== nickname &&
+                this.userDao.findByNickname(nickname)
+            ) {
+                throw {
+                    code: 4009,
+                    message: '이미 사용 중인 닉네임입니다',
+                    data: null,
+                };
             }
 
             let profileImageUrl = user.profileImageUrl;
+            if (isProfileImageRemoved && user.profileImageUrl) {
+                deleteImage(user.profileImageUrl);
+                profileImageUrl = null;
+            }
 
             if (profileImage) {
-                if (profileImageUrl) {
-                    deleteImage(user.profileImageUrl);
-                }
-
                 profileImageUrl = await saveImage(profileImage);
             }
 
@@ -74,7 +75,9 @@ class UserController {
                 data: data,
             };
         } catch (errorResponse) {
-            deleteImage(profileImage.path);
+            if (profileImage) {
+                deleteImage(profileImage.path);
+            }
             throw errorResponse;
         }
     }

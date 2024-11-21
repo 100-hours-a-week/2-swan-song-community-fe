@@ -50,10 +50,17 @@ userRouter.get('/me', async (req, res) => {
 
 // 회원정보 수정
 userRouter.put('/me', upload.single('profileImage'), async (req, res) => {
-    const { nickname } = req.body;
+    const nickname = req.body.nickname;
+    const isProfileImageRemoved = req.body.isProfileImageRemoved === 'true';
     const profileImage = req.file;
+    const sessionId = req.cookies.session_id;
+    const user = getLoggedInUser(sessionId);
 
-    if (!nickname && !profileImage) {
+    if (
+        (!nickname || nickname === user.nickname) &&
+        isProfileImageRemoved === false &&
+        !profileImage
+    ) {
         return res.status(400).json({
             code: 4000,
             message: '유효하지 않은 요청입니다.',
@@ -61,12 +68,10 @@ userRouter.put('/me', upload.single('profileImage'), async (req, res) => {
         });
     }
 
-    const sessionId = req.cookies.session_id;
-    const user = getLoggedInUser(sessionId);
-
     try {
         const result = await userController.updateUser(user.id, {
             nickname,
+            isProfileImageRemoved,
             profileImage,
         });
         res.status(200).json(result);

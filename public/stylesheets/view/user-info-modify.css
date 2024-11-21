@@ -103,9 +103,8 @@ input[type='file'] {
 }
 
 .image-placeholder {
-    width: 100px;
-    height: 100px;
-    background-color: #ccc;
+    width: 108px;
+    height: 108px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -170,7 +169,7 @@ input[type='file'] {
     font-weight: regular;
 }
 
-.modal-delete {
+.modal {
     display: none;
     flex-direction: column;
     justify-content: center;
@@ -186,24 +185,24 @@ input[type='file'] {
     z-index: 999;
 }
 
-.modal-delete-user {
+.modal-inner {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.modal-delete-user h2 {
+.modal-inner h2 {
     font-size: 24px;
     font-weight: bold;
 }
 
-.modal-delete-user p {
+.modal-inner p {
     font-size: 16px;
     margin-top: 10px;
 }
 
-.modal-delete-user button {
+.modal-inner button {
     padding: 6px 25px;
     border: none;
     border-radius: 5px;
@@ -213,12 +212,12 @@ input[type='file'] {
     margin-top: 20px;
 }
 
-.modal-delete-user .cancel {
+.modal-inner .cancel {
     background-color: #000000;
     color: #e0e0e0;
 }
 
-.modal-delete-user .confirm {
+.modal-inner .confirm {
     background-color: #7f6aee;
     color: #000;
 }
