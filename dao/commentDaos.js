@@ -12,6 +12,10 @@ class ICommentDao {
         throw new Error('구현되지 않은 메소드입니다.');
     }
 
+    findByUserId(userId) {
+        throw new Error('구현되지 않은 메소드입니다.');
+    }
+
     findByPostId(postId) {
         throw new Error('구현되지 않은 메소드입니다.');
     }
@@ -25,6 +29,10 @@ class ICommentDao {
     }
 
     deleteComment(commentId) {
+        throw new Error('구현되지 않은 메소드입니다.');
+    }
+
+    deleteCommentsByUserId(userId) {
         throw new Error('구현되지 않은 메소드입니다.');
     }
 }
@@ -47,6 +55,10 @@ class InMemoryCommentDao extends ICommentDao {
         }
 
         return this.comments[commentId];
+    }
+
+    findByUserId(userId) {
+        return this.comments.filter(c => c.authorId === userId);
     }
 
     findByPostId(postId) {
@@ -78,6 +90,13 @@ class InMemoryCommentDao extends ICommentDao {
         }
 
         this.comments.splice(commentIdx, 1);
+    }
+
+    deleteCommentsByUserId(userId) {
+        const comments = this.findByUserId(userId);
+        comments.forEach(comment => {
+            this.deleteComment(comment.id);
+        });
     }
 }
 

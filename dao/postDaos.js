@@ -12,6 +12,10 @@ class IPostDao {
         throw new Error('구현되지 않은 메소드입니다.');
     }
 
+    findAllByUserId(userId) {
+        throw new Error('구현되지 않은 메소드입니다.');
+    }
+
     createPost(post) {
         throw new Error('구현되지 않은 메소드입니다.');
     }
@@ -49,6 +53,10 @@ class InMemoryPostDao extends IPostDao {
         }
 
         return this.posts[postId];
+    }
+
+    findAllByUserId(userId) {
+        return this.posts.filter(post => post.userId === userId);
     }
 
     createPost(post) {

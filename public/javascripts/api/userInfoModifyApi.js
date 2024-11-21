@@ -49,3 +49,18 @@ modifyUserBtn.addEventListener('click', async () => {
         console.error(error);
     }
 });
+
+const btnUserWithdrawal = document.getElementById('btnConfirmUserDelete');
+btnUserWithdrawal.addEventListener('click', async () => {
+    try {
+        const response = await fetch('/api/v1/auth/withdrawal', {
+            method: 'DELETE',
+        });
+
+        if (response.status === 204) {
+            window.location.href = '/login';
+        }
+    } catch (error) {
+        console.error(error);
+    }
+});

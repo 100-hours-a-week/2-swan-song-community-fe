@@ -30,6 +30,10 @@ class IPostLikeDao {
     deletePostLike(postLikeId) {
         throw new Error('구현되지 않은 메소드입니다.');
     }
+
+    deleteAllLikeByUserId(userId) {
+        throw new Error('구현되지 않은 메소드입니다.');
+    }
 }
 
 class InMemoryPostLikeDao extends IPostLikeDao {
@@ -85,6 +89,15 @@ class InMemoryPostLikeDao extends IPostLikeDao {
         }
 
         this.postLikes.splice(postLikeIdx, 1);
+    }
+
+    deleteAllByUserId(userId) {
+        const postLikesToDelete = this.postLikes.filter(
+            c => c.userId === userId,
+        );
+        postLikesToDelete.forEach(c => {
+            this.deletePostLike(c);
+        });
     }
 }
 

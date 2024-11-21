@@ -1,7 +1,15 @@
 import 'express-async-errors';
 import bcrypt from 'bcryptjs';
+
 import { User } from '../model/user.js';
+
 import { userDao } from '../dao/userDaos.js';
+import { postDao } from '../dao/postDaos.js';
+import { commentDao } from '../dao/commentDaos.js';
+import { viewHistoryDao } from '../dao/viewHistoryDaos.js';
+import { postLikeDao } from '../dao/postLikeDaos.js';
+import { postController } from './postController.js';
+
 import {
     addSession,
     isLoggedIn,
@@ -96,6 +104,32 @@ class AuthController {
         removeSession(sessionId);
         res.clearCookie('session_id');
         res.status(204).end();
+    }
+
+    async withdraw(res, sessionId, userId) {
+        try {
+            const posts = postDao.findAllByUserId(userId);
+            posts.forEach(post => {
+                postController.deletePost(post.id);
+            });
+            commentDao.deleteCommentsByUserId(userId);
+            postLikeDao.deleteAllByUserId(userId);
+            viewHistoryDao.deleteViewHistoriesByUserId(userId);
+
+            const user = userDao.findById(userId);
+
+            userDao.deleteUser(user);
+
+            if (user.profileImageUrl) {
+                deleteImage(user.profileImageUrl);
+            }
+
+            removeSession(sessionId);
+            res.clearCookie('session_id');
+            res.status(204).end();
+        } catch (errorResponse) {
+            throw errorResponse;
+        }
     }
 }
 

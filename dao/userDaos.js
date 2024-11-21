@@ -27,6 +27,14 @@ class IUserDao {
     updateUser(userId, updatedUserDto) {
         throw new Error('구현되지 않은 메소드입니다.');
     }
+
+    updateUserPassword(userId, hashedPassword) {
+        throw new Error('구현되지 않은 메소드입니다.');
+    }
+
+    deleteUser(userId) {
+        throw new Error('구현되지 않은 메소드입니다.');
+    }
 }
 
 class InMemoryUserDao extends IUserDao {
@@ -73,6 +81,11 @@ class InMemoryUserDao extends IUserDao {
     updateUserPassword(userId, hashedPassword) {
         const user = this.findById(userId);
         user.password = hashedPassword;
+    }
+
+    deleteUser(user) {
+        const userIdx = this.users.indexOf(user);
+        this.users.splice(userIdx, 1);
     }
 }
 

@@ -6,6 +6,8 @@ import { authController } from '../controller/authController.js';
 import multer from 'multer';
 import cookieParser from 'cookie-parser';
 
+import { getLoggedInUser, isLoggedIn } from '../module/authUtils.js';
+
 const authRouter = express.Router();
 const upload = multer({ dest: 'public/images/' }); // 이미지 업로드를 위한 multer 설정
 
@@ -141,6 +143,25 @@ authRouter.post('/logout', (req, res) => {
     }
 
     authController.logout(res, sessionId);
+});
+
+// 회원 탈퇴
+authRouter.delete('/withdrawal', (req, res) => {
+    const sessionId = req.cookies.session_id;
+
+    if (sessionId === undefined) {
+        return res
+            .status(401)
+            .json({ code: 4001, message: '인증이 필요합니다.', data: null });
+    }
+
+    try {
+        const userId = getLoggedInUser(sessionId).id;
+
+        authController.withdraw(res, sessionId, userId);
+    } catch (errorResponse) {
+        res.status(200).json(errorResponse);
+    }
 });
 
 export default authRouter;
