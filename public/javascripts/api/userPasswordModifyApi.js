@@ -13,11 +13,12 @@ document.addEventListener('DOMContentLoaded', function () {
         };
 
         try {
-            const response = await fetch('/api/v1/users/me/password', {
+            const response = await fetch(`${API_BASE_URL}/users/me/password`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                credentials: 'include',
                 body: JSON.stringify(body),
             });
 

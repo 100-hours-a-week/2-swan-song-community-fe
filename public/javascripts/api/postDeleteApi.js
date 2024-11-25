@@ -4,8 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
     );
 
     const deletePostApi = async postId => {
-        await fetch(`/api/v1/posts/${postId}`, {
+        await fetch(`${API_BASE_URL}/posts/${postId}`, {
             method: 'DELETE',
+            credentials: 'include',
         });
     };
 

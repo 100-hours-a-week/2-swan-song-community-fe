@@ -8,7 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const fetchPostDetails = async () => {
         const urlParams = new URLSearchParams(window.location.search);
         const postId = urlParams.get('postId');
-        const response = await fetch(`/api/v1/posts/${postId}`);
+        const response = await fetch(`${API_BASE_URL}/posts/${postId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+        });
         const result = await response.json();
 
         if (result.code === 2000) {
@@ -27,12 +33,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
         } else {
             document.getElementById('btnPostModify').remove();
+            document.getElementById('btnPostDelete').remove();
         }
 
         document.querySelector('.post-title').textContent = data.title;
 
         if (data.imageUrl) {
-            document.querySelector('.content img').src = data.imageUrl;
+            document.querySelector('.content img').src =
+                `${IMAGE_BASE_URL}${data.imageUrl}`;
         } else {
             document.querySelector('.content img').remove();
         }
@@ -44,8 +52,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.date').textContent = formatDate(date);
 
         document.getElementById('profileImage').src =
-            data.author.profileImageUrl ||
-            '/images/assets/User_Default_Profile.svg';
+            data.author.profileImageUrl !== null
+                ? `${IMAGE_BASE_URL}/${data.author.profileImageUrl}`
+                : '/images/assets/User_Default_Profile.svg';
 
         if (data.isLiked) {
             document
@@ -71,8 +80,9 @@ document.addEventListener('DOMContentLoaded', () => {
             commentEl.dataset.commentId = comment.commentId;
 
             const profileImageUrl =
-                comment.author.profileImageUrl ||
-                '/images/assets/User_Default_Profile.svg';
+                comment.author.profileImageUrl !== null
+                    ? `${IMAGE_BASE_URL}${comment.author.profileImageUrl}`
+                    : '/images/assets/User_Default_Profile.svg';
             const date = new Date(comment.createdDateTime);
 
             commentEl.innerHTML = `

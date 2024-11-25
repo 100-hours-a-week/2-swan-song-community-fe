@@ -11,11 +11,12 @@ document.addEventListener('DOMContentLoaded', () => {
             : false;
 
         if (isLiked) {
-            const response = await fetch('/api/v1/posts/likes', {
+            const response = await fetch(`${API_BASE_URL}/posts/likes`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                credentials: 'include',
                 body: JSON.stringify({ postId }),
             });
 
@@ -25,11 +26,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     parseInt(likeCountText.textContent) - 1;
             }
         } else {
-            const response = await fetch('/api/v1/posts/likes', {
+            const response = await fetch(`${API_BASE_URL}/posts/likes`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                credentials: 'include',
                 body: JSON.stringify({ postId }),
             });
 

@@ -13,8 +13,14 @@ const fetchPosts = async () => {
     if (size) params.append('size', size);
     if (lastId) params.append('lastId', lastId);
 
-    const url = `./api/v1/posts${params.toString() ? '?' + params.toString() : ''}`;
-    const response = await fetch(url);
+    const url = `${API_BASE_URL}/posts${params.toString() ? '?' + params.toString() : ''}`;
+    const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+    });
     const data = await response.json();
 
     if (data.code === 2000) {
@@ -30,7 +36,10 @@ const renderPosts = posts => {
 
     posts.forEach(post => {
         const profileImageUrl =
-            post.profileImageUrl || './images/assets/User_Default_Profile.svg';
+            post.profileImageUrl !== null
+                ? `${IMAGE_BASE_URL}/${post.profileImageUrl}`
+                : './images/assets/User_Default_Profile.svg';
+
         const formattedDate = formatDate(new Date(post.createdDateTime));
 
         const postItemHTML = `

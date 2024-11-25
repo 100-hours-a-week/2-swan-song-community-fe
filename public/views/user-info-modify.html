@@ -9,6 +9,7 @@
             rel="stylesheet"
             href="../stylesheets/view/user-info-modify.css"
         />
+        <script src="../javascripts/api/config.js" defer></script>
         <script src="../javascripts/module/globalNavbar.js" defer></script>
         <script src="../javascripts/view/userInfoModify.js" defer></script>
         <script src="../javascripts/validator/userInfoModify.js" defer></script>
@@ -29,7 +30,7 @@
                     <img
                         id="profileDropDownToggle"
                         class="profile-image"
-                        src="../images/assets/my-profile.png"
+                        src=""
                         alt="목록"
                     />
                     <ul class="profile-menu">
@@ -41,7 +42,7 @@
                                 >비밀번호수정</a
                             >
                         </li>
-                        <li><a onclick="logout()">로그아웃</a></li>
+                        <li><a onclick="logoutUser()">로그아웃</a></li>
                     </ul>
                 </a>
             </div>
@@ -69,7 +70,7 @@
                             <img
                                 id="profileImagePreview"
                                 class="placeholder-cur-profile"
-                                src="../images/assets/my-profile.png"
+                                src=""
                                 alt="plus"
                             />
                         </div>
@@ -77,7 +78,7 @@
                 </div>
                 <div class="input-box">
                     <label for="email">이메일</label>
-                    <a id="info-modify-email" class="emale">amu@mal.fest</a>
+                    <a id="info-modify-email" class="emale"></a>
                 </div>
                 <div class="input-box">
                     <label for="nickname">닉네임</label>

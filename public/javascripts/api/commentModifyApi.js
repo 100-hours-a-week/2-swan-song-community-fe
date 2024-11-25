@@ -5,11 +5,12 @@ const updatePostComment = async () => {
     const commentId = commentInputTextarea.dataset.commentId;
 
     const content = commentInputTextarea.value;
-    const response = await fetch('/api/v1/posts/comments', {
+    const response = await fetch(`${API_BASE_URL}/posts/comments`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({ commentId, content }),
     });
 

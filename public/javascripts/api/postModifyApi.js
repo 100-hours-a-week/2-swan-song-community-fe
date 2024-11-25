@@ -1,7 +1,8 @@
 const modifyPost = async (postId, formData) => {
-    const response = await fetch(`/api/v1/posts/${postId}`, {
+    const response = await fetch(`${API_BASE_URL}/posts/${postId}`, {
         method: 'PUT',
         body: formData,
+        credentials: 'include',
     });
 
     const responseJson = await response.json();
@@ -10,7 +11,10 @@ const modifyPost = async (postId, formData) => {
 };
 
 const fetchPostInput = async postId => {
-    const response = await fetch(`/api/v1/posts/${postId}?comment=n`);
+    const response = await fetch(`${API_BASE_URL}/posts/${postId}?comment=n`, {
+        method: 'GET',
+        credentials: 'include',
+    });
 
     const responseJson = await response.json();
     return responseJson;
@@ -57,7 +61,9 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchPostInput(postId).then(response => {
         if (response.code === 2000) {
             renderPostInput(response.data);
-            renderPostImage(response.data.imageUrl);
+            if (response.data.imageUrl !== null) {
+                renderPostImage(`${IMAGE_BASE_URL}${response.data.imageUrl}`);
+            }
         }
     });
 

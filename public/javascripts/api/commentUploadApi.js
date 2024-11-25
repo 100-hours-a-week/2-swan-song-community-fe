@@ -11,11 +11,12 @@ const uploadPostComment = async () => {
         return;
     }
 
-    const response = await fetch('/api/v1/posts/comments', {
+    const response = await fetch(`${API_BASE_URL}/posts/comments`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({ postId, content }),
     });
     const responseJson = await response.json();
@@ -37,9 +38,10 @@ const createComment = async comment => {
     commentEl.classList.add('comment');
     commentEl.dataset.commentId = comment.commentId;
 
-    const profileImageUrl = comment.profileImageUrl
-        ? comment.profileImageUrl
-        : '/images/assets/User_Default_Profile.svg';
+    const profileImageUrl =
+        comment.profileImageUrl !== null
+            ? `${IMAGE_BASE_URL}${comment.profileImageUrl}`
+            : '/images/assets/User_Default_Profile.svg';
 
     const date = new Date(comment.createdDateTime);
     const formattedDate = formatDate(date);

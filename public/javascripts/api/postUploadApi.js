@@ -1,7 +1,8 @@
 const uploadPost = async formData => {
-    const response = await fetch('/api/v1/posts', {
+    const response = await fetch(`${API_BASE_URL}/posts`, {
         method: 'POST',
         body: formData,
+        credentials: 'include',
     });
 
     const responseJson = await response.json();

@@ -1,6 +1,9 @@
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        const response = await fetch('/api/v1/users/me');
+        const response = await fetch(`${API_BASE_URL}/users/me`, {
+            method: 'GET',
+            credentials: 'include',
+        });
         const responseJson = await response.json();
 
         const userModifyInput = document.getElementById('userInfoModifyForm');
@@ -16,8 +19,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         nicknameInput.value = responseJson.data.nickname || '';
 
         profileImageElement.src =
-            responseJson.data.profileImageUrl ||
-            '/images/assets/User_Default_Profile.svg';
+            responseJson.data.profileImageUrl !== null
+                ? `${IMAGE_BASE_URL}${responseJson.data.profileImageUrl}`
+                : '/images/assets/User_Default_Profile.svg';
 
         profileImagePlaceholder.querySelector('.placeholder-cur-profile').src =
             profileImageElement.src;
@@ -33,9 +37,10 @@ modifyUserBtn.addEventListener('click', async () => {
     formData.set('isProfileImageRemoved', isProfileImageRemoved);
 
     try {
-        const response = await fetch('/api/v1/users/me', {
+        const response = await fetch(`${API_BASE_URL}/users/me`, {
             method: 'PUT',
             body: formData,
+            credentials: 'include',
         });
 
         const responseJson = await response.json();
@@ -53,8 +58,9 @@ modifyUserBtn.addEventListener('click', async () => {
 const btnUserWithdrawal = document.getElementById('btnConfirmUserDelete');
 btnUserWithdrawal.addEventListener('click', async () => {
     try {
-        const response = await fetch('/api/v1/auth/withdrawal', {
+        const response = await fetch(`${API_BASE_URL}/auth/withdrawal`, {
             method: 'DELETE',
+            credentials: 'include',
         });
 
         if (response.status === 204) {

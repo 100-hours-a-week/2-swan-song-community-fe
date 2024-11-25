@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="../stylesheets/module/global-navbar.css" />
         <link rel="stylesheet" href="../stylesheets/view/post-detail.css" />
         <script src="../javascripts/module/globalNavbar.js" defer></script>
+        <script src="../javascripts/api/config.js" defer></script>
         <script src="../javascripts/api/globalNavbarApi.js" defer></script>
         <script src="../javascripts/api/postDetailApi.js" defer></script>
         <script src="../javascripts/api/commentUploadApi.js" defer></script>
@@ -35,7 +36,7 @@
                     <img
                         id="profileDropDownToggle"
                         class="profile-image"
-                        src="../images/assets/my-profile.png"
+                        src=""
                         alt="목록"
                     />
                     <ul class="profile-menu">
@@ -47,7 +48,7 @@
                                 >비밀번호수정</a
                             >
                         </li>
-                        <li><a onclick="logout()">로그아웃</a></li>
+                        <li><a onclick="logoutUser()">로그아웃</a></li>
                     </ul>
                 </a>
             </div>
@@ -60,11 +61,11 @@
                         <img
                             id="profileImage"
                             class="profile-image"
-                            src="../images/assets/my-profile.png"
+                            src=""
                             alt="프로필 이미지"
                         />
-                        <a class="author">작성자</a>
-                        <a class="date">2021-01-01 00:00:00</a>
+                        <a class="author"></a>
+                        <a class="date"></a>
                     </div>
                     <div class="right-info">
                         <button id="btnPostModify">수정</button>
@@ -78,14 +79,14 @@
             </div>
             <div class="post-reaction">
                 <a id="likeBtn" class="btn-reaction post-liked-active">
-                    <span id="likeCountText">123</span>
+                    <span id="likeCountText"></span>
                     <span>좋아요 수</span>
                 </a>
                 <a class="btn-reaction"
-                    ><span id="viewCountText">123</span>조회수</a
+                    ><span id="viewCountText"></span>조회수</a
                 >
                 <a class="btn-reaction"
-                    ><span id="commentCountText">123</span>댓글</a
+                    ><span id="commentCountText"></span>댓글</a
                 >
             </div>
             <div id="commentInputForm" class="comment-form">
@@ -97,62 +98,7 @@
                     <button id="commentInputFormButton">댓글 등록</button>
                 </div>
             </div>
-            <div class="comment-list">
-                <div class="comment">
-                    <div class="comment-left-info">
-                        <div class="metadata">
-                            <img
-                                class="profile-image"
-                                src="../images/assets/my-profile.png"
-                                alt="프로필 이미지"
-                            />
-                            <a class="author"
-                                >홍길동입니다다다다다다다다다다다</a
-                            >
-                            <a class="date">2021-01-01 00:00:00</a>
-                        </div>
-                        <div class="comment-content">
-                            <p>odio? At, numquam.</p>
-                        </div>
-                    </div>
-                    <div class="comment-right-info">
-                        <button
-                            id="btnCommentModify"
-                            onclick="setCommentButtonUpdate(1, 'odio? At, numquam.')"
-                        >
-                            수정
-                        </button>
-                        <button id="btnCommentDelete">삭제</button>
-                    </div>
-                </div>
-                <div class="comment">
-                    <div class="comment-left-info">
-                        <div class="metadata">
-                            <img
-                                class="profile-image"
-                                src="../images/assets/my-profile.png"
-                                alt="프로필 이미지"
-                            />
-                            <a class="author"
-                                >홍길동입니다다다다다다다다다다다</a
-                            >
-                            <a class="date">2021-01-01 00:00:00</a>
-                        </div>
-                        <div class="comment-content">
-                            <p>Lorem ipsum dolor sit amet consectetur.</p>
-                        </div>
-                    </div>
-                    <div class="comment-right-info">
-                        <button
-                            id="btnCommentModify"
-                            onclick="setCommentButtonUpdate(2, 'Lorem ipsum dolor sit amet consectetur.')"
-                        >
-                            수정
-                        </button>
-                        <button id="btnCommentDelete">삭제</button>
-                    </div>
-                </div>
-            </div>
+            <div class="comment-list"></div>
         </section>
         <div id="modalPostDelete" class="modal-delete">
             <div class="modal-delete-content">

@@ -60,19 +60,11 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             try {
                 const response = await fetch(
-                    `/api/v1/auth/check-nickname?nickname=${nickname}`,
-                    {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                    },
+                    `${API_BASE_URL}/auth/check-nickname?nickname=${nickname}`,
                 );
 
                 const data = await response.json();
                 if (!data.data.isAvailable) {
-                    console.log(data);
-                    console.log(data.data.isAvailable);
                     nicknameHelper.style.color = '#FF0000';
                     nicknameHelper.textContent = '* 닉네임이 중복되었습니다.';
                     isValid = false;

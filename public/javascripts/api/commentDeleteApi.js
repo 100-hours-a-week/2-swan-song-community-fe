@@ -2,11 +2,12 @@ const deletePostComment = async () => {
     const modalCommentDelete = document.getElementById('modalCommentDelete');
     const commentId = modalCommentDelete.dataset.commentId;
 
-    const response = await fetch('/api/v1/posts/comments', {
+    const response = await fetch(`${API_BASE_URL}/posts/comments`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({ commentId }),
     });
 

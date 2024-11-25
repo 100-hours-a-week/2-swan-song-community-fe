@@ -8,7 +8,7 @@ const signupUser = async formData => {
         const encodedPasswordChecker = btoa(passwordChecker);
         formData.set('passwordChecker', encodedPasswordChecker);
 
-        const response = await fetch('/api/v1/auth/signup', {
+        const response = await fetch(`${API_BASE_URL}/auth/signup`, {
             method: 'POST',
             body: formData,
         });
@@ -29,9 +29,10 @@ const loginUser = async formData => {
         const encodedPasswordChecker = btoa(passwordChecker);
         formData.set('passwordChecker', encodedPasswordChecker);
 
-        const response = await fetch('/api/v1/auth/signin', {
+        const response = await fetch(`${API_BASE_URL}/auth/signin`, {
             method: 'POST',
             body: formData,
+            credentials: 'include',
         });
 
         return await response.json();
