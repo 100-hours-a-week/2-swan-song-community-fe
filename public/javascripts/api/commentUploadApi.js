@@ -43,8 +43,7 @@ const createComment = async comment => {
             ? `${IMAGE_BASE_URL}${comment.profileImageUrl}`
             : '/images/assets/User_Default_Profile.svg';
 
-    const date = new Date(comment.createdDateTime);
-    const formattedDate = formatDate(date);
+    const formattedDate = comment.createdDateTime;
 
     commentEl.innerHTML = `
         <div class="comment-left-info">

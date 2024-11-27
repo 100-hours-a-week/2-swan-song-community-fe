@@ -1,9 +1,3 @@
-const formatDate = date => {
-    const pad = num => String(num).padStart(2, '0'); // 한 자리 수는 앞에 0을 붙여 두 자리로 만듦
-    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} 
-            ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
-};
-
 let size = 5;
 let lastId = null;
 let hasNext = true;
@@ -40,7 +34,7 @@ const renderPosts = posts => {
                 ? `${IMAGE_BASE_URL}/${post.profileImageUrl}`
                 : './images/assets/User_Default_Profile.svg';
 
-        const formattedDate = formatDate(new Date(post.createdDateTime));
+        const formattedDate = post.createdDateTime;
 
         const postItemHTML = `
             <div class="post-item" onclick="location.href='./views/post-detail.html?postId=${post.postId}'">

@@ -1,9 +1,3 @@
-const formatDate = date => {
-    const pad = num => String(num).padStart(2, '0');
-    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} 
-            ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
-};
-
 document.addEventListener('DOMContentLoaded', () => {
     const fetchPostDetails = async () => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -48,8 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.querySelector('.author').textContent = data.author.name;
 
-        const date = new Date(data.createdDateTime);
-        document.querySelector('.date').textContent = formatDate(date);
+        document.querySelector('.date').textContent = data.createdDateTime;
 
         document.getElementById('profileImage').src =
             data.author.profileImageUrl !== null
@@ -83,14 +76,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 comment.author.profileImageUrl !== null
                     ? `${IMAGE_BASE_URL}${comment.author.profileImageUrl}`
                     : '/images/assets/User_Default_Profile.svg';
-            const date = new Date(comment.createdDateTime);
 
             commentEl.innerHTML = `
                 <div class="comment-left-info">
                     <div class="metadata">
                         <img class="profile-image" src="${profileImageUrl}" alt="프로필 이미지" />
                         <a class="author">${comment.author.name}</a>
-                        <a class="date">${formatDate(date)}</a>
+                        <a class="date">${comment.createdDateTime}</a>
                     </div>
                     <div class="comment-content">
                         <p>${comment.content}</p>
